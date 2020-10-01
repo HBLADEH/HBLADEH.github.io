@@ -25,10 +25,20 @@
 <p>菜单格式为 /路径/ || fontawesome 图标，可自由更换</p>
 <p>整点效果图<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img4.png" alt="图片"><br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img5.png" alt="图片"></p>
 <p><a href="#menu">回到顶部👆</a></p>
-<h2 id="添加阅读次数"><a href="#添加阅读次数" class="headerlink" title="添加阅读次数"></a><a id="reads">添加阅读次数</a></h2><h2 id="添加相关链接"><a href="#添加相关链接" class="headerlink" title="添加相关链接"></a><a id="links">添加相关链接</a></h2><p>添加相关链接和上面的左边菜单默认选项差不多，直接打开主题的 _config.yml，找到 social 选项如下图改就完事了</p>
+<h2 id="添加阅读次数"><a href="#添加阅读次数" class="headerlink" title="添加阅读次数"></a><a id="reads">添加阅读次数</a></h2><p>这个我还不懂能不能用，等能用了我再写嘻嘻</p>
+<h2 id="添加相关链接"><a href="#添加相关链接" class="headerlink" title="添加相关链接"></a><a id="links">添加相关链接</a></h2><p>添加相关链接和上面的左边菜单默认选项差不多，直接打开主题的 _config.yml，找到 social 选项如下图改就完事了</p>
 <p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img6.png" alt="图片"><br>格式为 地址 || fontawesome 图标，可自由更换</p>
 <p><a href="#menu">回到顶部👆</a></p>
-<h2 id="添加搜索"><a href="#添加搜索" class="headerlink" title="添加搜索"></a><a id="search">添加搜索</a></h2>]]></content>
+<h2 id="添加搜索"><a href="#添加搜索" class="headerlink" title="添加搜索"></a><a id="search">添加搜索</a></h2><p>要添加搜索功能就得先下 hexo-generator-searchdb</p>
+<p><code>npm install hexo-generator-searchdb --save</code></p>
+<p>接着修改 根目录的 _config.yml,在最底部加上如下配置</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#Local Search</span><br><span class="line">search:</span><br><span class="line">path: search.xml</span><br><span class="line">field: post</span><br><span class="line">format: html</span><br><span class="line">limit: <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+
+<p>再同步修改 themes 里的 _config.yml，搜索 local_search 修改enable为true</p>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>效果如下<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img7.png" alt="图片"></p>
+]]></content>
       <categories>
         <category>hexo 循序渐进</category>
       </categories>
