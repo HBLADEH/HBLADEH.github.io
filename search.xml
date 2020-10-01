@@ -14,14 +14,20 @@
 <a id="more"></a>
 
 <h2 id="评论插件-Gitalk"><a href="#评论插件-Gitalk" class="headerlink" title="评论插件 Gitalk"></a><a id="gitalk">评论插件 Gitalk</a></h2><p>首先我们需要注册一个<a href="https://github.com/settings/applications/new">Github Application</a></p>
-<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png" alt="图片1"></p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png" alt="图片"></p>
 <p>注册完成之后即可获得 Client ID 和 Client Secret</p>
 <p>打开 themes/主题/_config.yml 加入如下配置即可</p>
-<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img2.png" alt="图片2"></p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img2.png" alt="图片"></p>
 <p>显示效果就在文章底部哈</p>
 <p><a href="#menu">回到顶部👆</a></p>
-<h2 id="添加左边菜单栏默认选项"><a href="#添加左边菜单栏默认选项" class="headerlink" title="添加左边菜单栏默认选项"></a><a id="leftmenu">添加左边菜单栏默认选项</a></h2><p>这个简单，我用的是 next 主题，直接打开主题的 _config.yml，找到 menu 选项，解除想要使用的页面的注释即可</p>
-<h2 id="添加阅读次数"><a href="#添加阅读次数" class="headerlink" title="添加阅读次数"></a><a id="reads">添加阅读次数</a></h2><h2 id="添加相关链接"><a href="#添加相关链接" class="headerlink" title="添加相关链接"></a><a id="links">添加相关链接</a></h2><p><a href="#menu">回到顶部👆</a></p>
+<h2 id="添加左边菜单栏默认选项"><a href="#添加左边菜单栏默认选项" class="headerlink" title="添加左边菜单栏默认选项"></a><a id="leftmenu">添加左边菜单栏默认选项</a></h2><p>这个简单，我用的是 next 主题，直接打开主题的 _config.yml，找到 menu 选项，解除想要使用的页面的注释即可。</p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img3.png" alt="图片"></p>
+<p>菜单格式为 /路径/ || fontawesome 图标，可自由更换</p>
+<p>整点效果图<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img4.png" alt="图片"><br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img5.png" alt="图片"></p>
+<p><a href="#menu">回到顶部👆</a></p>
+<h2 id="添加阅读次数"><a href="#添加阅读次数" class="headerlink" title="添加阅读次数"></a><a id="reads">添加阅读次数</a></h2><h2 id="添加相关链接"><a href="#添加相关链接" class="headerlink" title="添加相关链接"></a><a id="links">添加相关链接</a></h2><p>添加相关链接和上面的左边菜单默认选项差不多，直接打开主题的 _config.yml，找到 social 选项如下图改就完事了</p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img6.png" alt="图片"><br>格式为 地址 || fontawesome 图标，可自由更换</p>
+<p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加搜索"><a href="#添加搜索" class="headerlink" title="添加搜索"></a><a id="search">添加搜索</a></h2>]]></content>
       <categories>
         <category>hexo 循序渐进</category>
@@ -30,14 +36,6 @@
         <tag>hexo</tag>
         <tag>next</tag>
         <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测试文章</title>
-    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
-      <tags>
-        <tag>第一次使用</tag>
       </tags>
   </entry>
   <entry>
@@ -58,6 +56,14 @@
       <tags>
         <tag>spring-boot</tag>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测试文章</title>
+    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
+      <tags>
+        <tag>第一次使用</tag>
       </tags>
   </entry>
   <entry>
