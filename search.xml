@@ -53,13 +53,37 @@
     <url>/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<p>上来我直接列出 spring boot 的优点:</p>
 <ul>
-<li>遵循”约定大于配置”的原则，简化了配置：</li>
+<li>遵循”约定大于配置”的原则，简化了配置：<ul>
 <li>牺牲了一定了灵活性，但是统一约定统一配置，适合整体管理</li>
+</ul>
+</li>
 <li>完全脱离 xml 配置，可以使用注解和 java config 进行配置</li>
 <li>内嵌了 Servlet 容器，应用可以用 jar 包执行 (java -jar)</li>
 <li>能快速构建项目、整合第三方类库，方便易用</li>
+<li>提供了 starter POM，可以方便的进行包管理，简化包管理配置</li>
+<li>于 spring cloud 相通，spring boot 是目前 java 体系内实现微服务的最佳方案<a id="more"></a>
+
+</li>
 </ul>
-]]></content>
+<p>IDE当然是 IDEA 啦，不用Eclipse哈。</p>
+<h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><p>点击新建项目，记得选择 Spring Initializr</p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img1.png" alt="图片"></p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img2.png" alt="图片"></p>
+<p>然后进入依赖选择，这里选择最基本的 Spring Web 了，其他的以后再讲</p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img3.png" alt="图片"></p>
+<p>创建完之后，选择左边的项目目录，下图中高亮的几个文件可以删除，因为在使用 IDEA 这个编辑器，我们可以通过右边栏有个专门管理 maven 的模块使用</p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img4.png" alt="图片" title="可以删除的文件"></p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img5.png" alt="图片" title="maven 模块"></p>
+<p>在 pom.xml 文件中，我们可以看到刚刚勾选的依赖 spring-boot-starter-web 已经导入到项目中了</p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img6.png" alt="图片" title="spring-boot-starter-web"></p>
+<p>至此项目创建完成</p>
+<h2 id="编写一个简单的-controller"><a href="#编写一个简单的-controller" class="headerlink" title="编写一个简单的 controller"></a>编写一个简单的 controller</h2><p> <kbd>Alt</kbd>+<kbd>insert</kbd> 或者右键选择 New，创建一个 controller 文件夹，并用同样的方法创建一个 HelloController.java 在该文件夹下</p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img7.png" alt="图片" title="创建文件夹和文件"></p>
+<p>给 HelloController 类加上注解 @RestController，并且编写一个 hello 方法，该方法拥有一个 name 参数 并返回 hello world 和 name 的组合，并给该方法加上一个对外服务的路径 @RequestMapping(“/hello”)，这样一个简单的 spring boot 的服务接口就完成了</p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img8.png" alt="图片" title="添加注解和方法"></p>
+<h2 id="显示效果在此"><a href="#显示效果在此" class="headerlink" title="显示效果在此"></a>显示效果在此</h2><p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img9.png" alt="图片" title="效果"></p>
+<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img10.png" alt="图片" title="效果2"></p>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">first</span><br><span class="line">├─.idea</span><br><span class="line">│  ├─codeStyles</span><br><span class="line">│  └─libraries</span><br><span class="line">├─.mvn</span><br><span class="line">│  └─wrapper</span><br><span class="line">├─src</span><br><span class="line">│  ├─main</span><br><span class="line">│  │  ├─java</span><br><span class="line">│  │  │  └─com</span><br><span class="line">│  │  │      └─pjboy</span><br><span class="line">│  │  │          └─first</span><br><span class="line">│  │  │              └─controller</span><br><span class="line">│  │  └─resources</span><br><span class="line">│  │      ├─static</span><br><span class="line">│  │      └─templates</span><br><span class="line">│  └─test</span><br><span class="line">│      └─java</span><br><span class="line">│          └─com</span><br><span class="line">│              └─pjboy</span><br><span class="line">│                  └─first</span><br><span class="line">└─target</span><br><span class="line">    ├─classes</span><br><span class="line">    │  └─com</span><br><span class="line">    │      └─pjboy</span><br><span class="line">    │          └─first</span><br><span class="line">    │              └─controller</span><br><span class="line">    ├─generated-sources</span><br><span class="line">    │  └─annotations</span><br><span class="line">    ├─generated-test-sources</span><br><span class="line">    │  └─test-annotations</span><br><span class="line">    └─test-classes</span><br><span class="line">        └─com</span><br><span class="line">            └─pjboy</span><br><span class="line">                └─first</span><br></pre></td></tr></table></figure>]]></content>
       <categories>
         <category>spring boot 学习</category>
       </categories>
