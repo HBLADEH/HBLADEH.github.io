@@ -4,13 +4,15 @@
     <title>hexo + next 给博客添加新功能</title>
     <url>/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<p>  把用到的一些插件的配置方法记录一下，免得以后忘记了。</p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a id="menu">目录</a></h2><ul>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a id="menu">目录</a></h2><blockquote>
+<ul>
 <li><a href="#gitalk">评论插件 Gitalk</a></li>
 <li><a href="#leftmenu">添加左边菜单栏默认选项</a></li>
 <li><a href="#reads">添加阅读次数</a></li>
 <li><a href="#links">添加相关链接</a></li>
 <li><a href="#search">添加搜索</a></li>
 </ul>
+</blockquote>
 <a id="more"></a>
 
 <h2 id="评论插件-Gitalk"><a href="#评论插件-Gitalk" class="headerlink" title="评论插件 Gitalk"></a><a id="gitalk">评论插件 Gitalk</a></h2><p>首先我们需要注册一个<a href="https://github.com/settings/applications/new">Github Application</a></p>
@@ -49,23 +51,24 @@
       </tags>
   </entry>
   <entry>
-    <title>学习 spring boot (一) 新建项目</title>
+    <title>学习 spring boot（一）新建项目，项目结构解析</title>
     <url>/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<p>上来我直接列出 spring boot 的优点:</p>
+<blockquote>
 <ul>
-<li>遵循”约定大于配置”的原则，简化了配置：<ul>
+<li>遵循”约定大于配置”的原则，简化了配置：</li>
 <li>牺牲了一定了灵活性，但是统一约定统一配置，适合整体管理</li>
-</ul>
-</li>
 <li>完全脱离 xml 配置，可以使用注解和 java config 进行配置</li>
 <li>内嵌了 Servlet 容器，应用可以用 jar 包执行 (java -jar)</li>
 <li>能快速构建项目、整合第三方类库，方便易用</li>
 <li>提供了 starter POM，可以方便的进行包管理，简化包管理配置</li>
-<li>于 spring cloud 相通，spring boot 是目前 java 体系内实现微服务的最佳方案<a id="more"></a>
-
-</li>
+<li>于 spring cloud 相通，spring boot 是目前 java 体系内实现微服务的最佳方案</li>
 </ul>
+</blockquote>
+<a id="more"></a>
+
 <p>IDE当然是 IDEA 啦，不用Eclipse哈。</p>
+<p>spring boot 并不是说要替代掉 spring 或者是 spring mvc，而是为了让使用者能更加简单地使用它们<br>spring boot 就是基于 spring 的框架的基础上进行一些封装，让 spring 用起来更加简单</p>
 <h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><p>点击新建项目，记得选择 Spring Initializr</p>
 <p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img1.png" alt="图片"></p>
 <p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img2.png" alt="图片"></p>
@@ -83,7 +86,8 @@
 <p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img8.png" alt="图片" title="添加注解和方法"></p>
 <h2 id="显示效果在此"><a href="#显示效果在此" class="headerlink" title="显示效果在此"></a>显示效果在此</h2><p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img9.png" alt="图片" title="效果"></p>
 <p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img10.png" alt="图片" title="效果2"></p>
-<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">first</span><br><span class="line">├─.idea</span><br><span class="line">│  ├─codeStyles</span><br><span class="line">│  └─libraries</span><br><span class="line">├─.mvn</span><br><span class="line">│  └─wrapper</span><br><span class="line">├─src</span><br><span class="line">│  ├─main</span><br><span class="line">│  │  ├─java</span><br><span class="line">│  │  │  └─com</span><br><span class="line">│  │  │      └─pjboy</span><br><span class="line">│  │  │          └─first</span><br><span class="line">│  │  │              └─controller</span><br><span class="line">│  │  └─resources</span><br><span class="line">│  │      ├─static</span><br><span class="line">│  │      └─templates</span><br><span class="line">│  └─test</span><br><span class="line">│      └─java</span><br><span class="line">│          └─com</span><br><span class="line">│              └─pjboy</span><br><span class="line">│                  └─first</span><br><span class="line">└─target</span><br><span class="line">    ├─classes</span><br><span class="line">    │  └─com</span><br><span class="line">    │      └─pjboy</span><br><span class="line">    │          └─first</span><br><span class="line">    │              └─controller</span><br><span class="line">    ├─generated-sources</span><br><span class="line">    │  └─annotations</span><br><span class="line">    ├─generated-test-sources</span><br><span class="line">    │  └─test-annotations</span><br><span class="line">    └─test-classes</span><br><span class="line">        └─com</span><br><span class="line">            └─pjboy</span><br><span class="line">                └─first</span><br></pre></td></tr></table></figure>]]></content>
+<h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">first</span><br><span class="line">├─.idea</span><br><span class="line">│  ├─codeStyles</span><br><span class="line">│  └─libraries</span><br><span class="line">├─.mvn</span><br><span class="line">│  └─wrapper</span><br><span class="line">├─src</span><br><span class="line">│  ├─main</span><br><span class="line">│  │  ├─java   <span class="comment">&lt;!-- 标准 Java存放位置 !--&gt;</span></span><br><span class="line">│  │  │  └─com</span><br><span class="line">│  │  │      └─pjboy</span><br><span class="line">│  │  │          └─first</span><br><span class="line">│  │  │              └─controller</span><br><span class="line">│  │  │              └─FirstApplication.java  <span class="comment">&lt;!-- 入口文件在此 !--&gt;</span></span><br><span class="line">│  │  └─resources <span class="comment">&lt;!-- 资源 !--&gt;</span></span><br><span class="line">│  │      ├─static</span><br><span class="line">│  │      └─templates</span><br><span class="line">│  │      └─application.properties <span class="comment">&lt;!-- 项目全局配置文件在此 !--&gt;</span></span><br><span class="line">│  └─test <span class="comment">&lt;!-- 用于写测试用例 !--&gt;</span></span><br><span class="line">│      └─java</span><br><span class="line">│          └─com</span><br><span class="line">│              └─pjboy</span><br><span class="line">│                  └─first</span><br><span class="line">│                  └─FirstApplicationTests.java</span><br><span class="line">└─target <span class="comment">&lt;!-- 编译结果，字节码等 !--&gt;</span></span><br><span class="line">    ├─classes</span><br><span class="line">    │  └─com</span><br><span class="line">    │      └─pjboy</span><br><span class="line">    │          └─first</span><br><span class="line">    │              └─controller</span><br><span class="line">    ├─generated-sources</span><br><span class="line">    │  └─annotations</span><br><span class="line">    ├─generated-test-sources</span><br><span class="line">    │  └─test-annotations</span><br><span class="line">    └─test-classes</span><br><span class="line">        └─com</span><br><span class="line">            └─pjboy</span><br><span class="line">                └─first</span><br><span class="line">└─pom.xml <span class="comment">&lt;!-- maven 的管理文件 !--&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
       <categories>
         <category>spring boot 学习</category>
       </categories>

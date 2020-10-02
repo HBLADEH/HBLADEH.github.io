@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="把用到的一些插件的配置方法记录一下，免得以后忘记了。 目录 评论插件 Gitalk 添加左边菜单栏默认选项 添加阅读次数 添加相关链接 添加搜索">
+  <meta name="description" content="把用到的一些插件的配置方法记录一下，免得以后忘记了。 目录  评论插件 Gitalk 添加左边菜单栏默认选项 添加阅读次数 添加相关链接 添加搜索">
 <meta property="og:type" content="article">
 <meta property="og:title" content="hexo + next 给博客添加新功能">
 <meta property="og:url" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/index.html">
 <meta property="og:site_name" content="PJ的博客">
-<meta property="og:description" content="把用到的一些插件的配置方法记录一下，免得以后忘记了。 目录 评论插件 Gitalk 添加左边菜单栏默认选项 添加阅读次数 添加相关链接 添加搜索">
+<meta property="og:description" content="把用到的一些插件的配置方法记录一下，免得以后忘记了。 目录  评论插件 Gitalk 添加左边菜单栏默认选项 添加阅读次数 添加相关链接 添加搜索">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png">
 <meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img2.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img6.png">
 <meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img7.png">
 <meta property="article:published_time" content="2020-10-01T02:10:20.000Z">
-<meta property="article:modified_time" content="2020-10-01T04:32:45.550Z">
+<meta property="article:modified_time" content="2020-10-02T07:27:14.038Z">
 <meta property="article:author" content="BLADE">
 <meta property="article:tag" content="hexo">
 <meta property="article:tag" content="next">
@@ -227,10 +227,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-01 10:10:20 / 修改时间：12:32:45" itemprop="dateCreated datePublished" datetime="2020-10-01T10:10:20+08:00">2020-10-01</time>
+              <time title="创建时间：2020-10-01 10:10:20" itemprop="dateCreated datePublished" datetime="2020-10-01T10:10:20+08:00">2020-10-01</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-02 15:27:14" itemprop="dateModified" datetime="2020-10-02T15:27:14+08:00">2020-10-02</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -260,13 +266,15 @@
 
       
         <p>  把用到的一些插件的配置方法记录一下，免得以后忘记了。</p>
-<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a id="menu">目录</a></h2><ul>
+<h2 id="目录"><a href="#目录" class="headerlink" title="目录"></a><a id="menu">目录</a></h2><blockquote>
+<ul>
 <li><a href="#gitalk">评论插件 Gitalk</a></li>
 <li><a href="#leftmenu">添加左边菜单栏默认选项</a></li>
 <li><a href="#reads">添加阅读次数</a></li>
 <li><a href="#links">添加相关链接</a></li>
 <li><a href="#search">添加搜索</a></li>
 </ul>
+</blockquote>
 <a id="more"></a>
 
 <h2 id="评论插件-Gitalk"><a href="#评论插件-Gitalk" class="headerlink" title="评论插件 Gitalk"></a><a id="gitalk">评论插件 Gitalk</a></h2><p>首先我们需要注册一个<a target="_blank" rel="noopener" href="https://github.com/settings/applications/new">Github Application</a></p>
