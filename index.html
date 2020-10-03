@@ -191,6 +191,89 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="BLADE">
+      <meta itemprop="description" content="躺下了">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="PJ的博客">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/" class="post-title-link" itemprop="url">spring boot 请求处理流程</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-10-03 18:32:36 / 修改时间：18:33:45" itemprop="dateCreated datePublished" datetime="2020-10-03T18:32:36+08:00">2020-10-03</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-boot-%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">spring boot 学习</span></a>
+                </span>
+            </span>
+
+          
+            <span id="/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/" class="post-meta-item leancloud_visitors" data-flag-title="spring boot 请求处理流程" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="流程图在此"><a href="#流程图在此" class="headerlink" title="流程图在此"></a>流程图在此</h2><pre class="mermaid" style="text-align: center;">
+            graph TD
+            A[请求发送者] -->|1.发送请求| B[DispatchServlet]
+B -->|2.查找匹配Handler| C[HandlerMapping]
+B -->|3.调用适配器| D[HandlerAdapter]
+D -->|4.处理业务请求| E(Handler controller)
+D --> F(ModelAndView)
+F -->|5.返回处理结果| B
+          </pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="http://example.com/2020/10/03/spring-boot-%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91-RESTful-%E6%8E%A5%E5%8F%A3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -216,7 +299,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2020-10-03 11:32:46 / 修改时间：11:35:42" itemprop="dateCreated datePublished" datetime="2020-10-03T11:32:46+08:00">2020-10-03</time>
+              <time title="创建时间：2020-10-03 11:32:46 / 修改时间：18:33:02" itemprop="dateCreated datePublished" datetime="2020-10-03T11:32:46+08:00">2020-10-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -304,8 +387,17 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-10-03 11:33:32" itemprop="dateModified" datetime="2020-10-03T11:33:32+08:00">2020-10-03</time>
+                <time title="修改时间：2020-10-03 18:33:23" itemprop="dateModified" datetime="2020-10-03T18:33:23+08:00">2020-10-03</time>
               </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-boot-%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">spring boot 学习</span></a>
+                </span>
+            </span>
 
           
             <span id="/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/" class="post-meta-item leancloud_visitors" data-flag-title="IDEA 写 spring boot 实现热部署" title="阅读次数">
@@ -375,9 +467,24 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2020-10-02 15:42:53 / 修改时间：15:45:47" itemprop="dateCreated datePublished" datetime="2020-10-02T15:42:53+08:00">2020-10-02</time>
+              <time title="创建时间：2020-10-02 15:42:53" itemprop="dateCreated datePublished" datetime="2020-10-02T15:42:53+08:00">2020-10-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-10-03 18:33:33" itemprop="dateModified" datetime="2020-10-03T18:33:33+08:00">2020-10-03</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-boot-%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">spring boot 学习</span></a>
+                </span>
             </span>
 
           
@@ -825,7 +932,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1017,6 +1124,19 @@
 
 
 
+<script>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
 
 
   
