@@ -91,6 +91,25 @@
       </tags>
   </entry>
   <entry>
+    <title>写 spring boot 时的一些插件推荐（IDEA）</title>
+    <url>/2020/10/02/%E5%86%99-spring-boot-%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%88IDEA%EF%BC%89/</url>
+    <content><![CDATA[<p>一些插件的推荐，具体看下面</p>
+<blockquote>
+<ul>
+<li><a href="#lombok">lombok 通过注解生成一些基本代码</a></li>
+</ul>
+</blockquote>
+<h2 id="lombok"><a href="#lombok" class="headerlink" title=" lombok"></a><a id="lombok"> lombok</a></h2>]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring boot 请求处理流程</title>
     <url>/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="流程图在此"><a href="#流程图在此" class="headerlink" title="流程图在此"></a>流程图在此</h2><pre class="mermaid" style="text-align: center;">
@@ -108,25 +127,6 @@ F -->|5.返回处理结果| B
       </categories>
       <tags>
         <tag>spring-boot</tag>
-        <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>写 spring boot 时的一些插件推荐（IDEA）</title>
-    <url>/2020/10/02/%E5%86%99-spring-boot-%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%88IDEA%EF%BC%89/</url>
-    <content><![CDATA[<p>一些插件的推荐，具体看下面</p>
-<blockquote>
-<ul>
-<li><a href="#lombok">lombok 通过注解生成一些基本代码</a></li>
-</ul>
-</blockquote>
-<h2 id="lombok"><a href="#lombok" class="headerlink" title=" lombok"></a><a id="lombok"> lombok</a></h2>]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
-      <tags>
-        <tag>idea</tag>
-        <tag>spring boot</tag>
         <tag>java</tag>
       </tags>
   </entry>
