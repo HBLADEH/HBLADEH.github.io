@@ -22,6 +22,27 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
+    <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Vue 学习 事件修饰符</title>
     <url>/2020/11/01/Vue-%E5%AD%A6%E4%B9%A0-%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
     <content><![CDATA[<p>在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。</p>
@@ -127,8 +148,8 @@
         <category>spring boot 学习</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>java</tag>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -148,8 +169,8 @@ F -->|5.返回处理结果| B
         <category>spring boot 学习</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>java</tag>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -213,8 +234,8 @@ F -->|5.返回处理结果| B
         <category>spring boot 学习</category>
       </categories>
       <tags>
-        <tag>spring-boot</tag>
         <tag>java</tag>
+        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>

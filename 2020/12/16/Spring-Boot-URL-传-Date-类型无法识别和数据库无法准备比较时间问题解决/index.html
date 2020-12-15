@@ -22,20 +22,22 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
   </script>
 
-  <meta name="description" content="测试一哈这个怎么用哈">
+  <meta name="description" content="首先检测配置文件 application.yml 的 jackson 的设置 1234567jackson:  # 全局设置@JsonFormat的格式pattern  date-format: yyyy-MM-dd HH:mm:ss  # 当地时区  locale: zh  # 设置全局时区  time-zone: GMT+8">
 <meta property="og:type" content="article">
-<meta property="og:title" content="测试文章">
-<meta property="og:url" content="http://example.com/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/index.html">
+<meta property="og:title" content="Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决">
+<meta property="og:url" content="http://example.com/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/index.html">
 <meta property="og:site_name" content="PJ的博客">
-<meta property="og:description" content="测试一哈这个怎么用哈">
+<meta property="og:description" content="首先检测配置文件 application.yml 的 jackson 的设置 1234567jackson:  # 全局设置@JsonFormat的格式pattern  date-format: yyyy-MM-dd HH:mm:ss  # 当地时区  locale: zh  # 设置全局时区  time-zone: GMT+8">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2020-09-29T10:33:38.000Z">
-<meta property="article:modified_time" content="2020-09-30T15:31:50.550Z">
+<meta property="article:published_time" content="2020-12-15T18:23:28.000Z">
+<meta property="article:modified_time" content="2020-12-15T18:31:15.592Z">
 <meta property="article:author" content="BLADE">
-<meta property="article:tag" content="第一次使用">
+<meta property="article:tag" content="idea">
+<meta property="article:tag" content="spring boot">
+<meta property="article:tag" content="java">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://example.com/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/">
+<link rel="canonical" href="http://example.com/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
 
 
 <script id="page-configurations">
@@ -48,7 +50,7 @@
   };
 </script>
 
-  <title>测试文章 | PJ的博客</title>
+  <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决 | PJ的博客</title>
   
 
 
@@ -197,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -210,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          测试文章
+          Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决
         </h1>
 
         <div class="post-meta">
@@ -219,16 +221,19 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
+              
 
-              <time title="创建时间：2020-09-29 18:33:38" itemprop="dateCreated datePublished" datetime="2020-09-29T18:33:38+08:00">2020-09-29</time>
+              <time title="创建时间：2020-12-16 02:23:28 / 修改时间：02:31:15" itemprop="dateCreated datePublished" datetime="2020-12-16T02:23:28+08:00">2020-12-16</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="far fa-calendar-check"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-09-30 23:31:50" itemprop="dateModified" datetime="2020-09-30T23:31:50+08:00">2020-09-30</time>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
               </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/spring-boot-%E5%AD%A6%E4%B9%A0/" itemprop="url" rel="index"><span itemprop="name">spring boot 学习</span></a>
+                </span>
+            </span>
 
           
             <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
@@ -248,7 +253,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>
+        <p>首先检测配置文件 application.yml 的 jackson 的设置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+
     </div>
 
     
@@ -257,7 +270,9 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/%E7%AC%AC%E4%B8%80%E6%AC%A1%E4%BD%BF%E7%94%A8/" rel="tag"># 第一次使用</a>
+              <a href="/tags/idea/" rel="tag"># idea</a>
+              <a href="/tags/spring-boot/" rel="tag"># spring boot</a>
+              <a href="/tags/java/" rel="tag"># java</a>
           </div>
 
         
@@ -265,11 +280,11 @@
 
         
     <div class="post-nav">
-      <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/" rel="next" title="学习 spring boot（一）新建项目，项目结构解析">
-      学习 spring boot（一）新建项目，项目结构解析 <i class="fa fa-chevron-right"></i>
+    <a href="/2020/11/01/Vue-%E5%AD%A6%E4%B9%A0-%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6/" rel="prev" title="Vue 学习 事件修饰符">
+      <i class="fa fa-chevron-left"></i> Vue 学习 事件修饰符
     </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -333,7 +348,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95%E4%B8%80%E5%93%88%E8%BF%99%E4%B8%AA%E6%80%8E%E4%B9%88%E7%94%A8%E5%93%88"><span class="nav-number">1.</span> <span class="nav-text">测试一哈这个怎么用哈</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
