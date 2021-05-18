@@ -1,24 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>IDEA 写 spring boot 实现热部署</title>
-    <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<p>这里使用的是 devtools</p>
-<a id="more"></a>
-
-<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在 pom.xml 中引入指定的依赖<br><img src="/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/img1.png" alt="图片"></p>
-<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>按下 <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>/</kbd>，选择Registry进入配置界面</p>
-<p><img src="/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/img2.png" alt="图片"></p>
-<p>找到下图红框中的选项，打上勾</p>
-<p><img src="/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/img3.png" alt="图片"></p>
-<p>至此即可完成热部署的配置了，此后当修改类文件时，只需在运行情况按下 <kbd>ctrl</kbd>+<kbd>F9</kbd>即可</p>
+    <title>Docker 的一些指令记录</title>
+    <url>/2021/05/18/Docker-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>有些指令啊，经常忘记哈哈哈哈。干脆直接记在这里吧！！！</p>
+<h2 id="启动-nginx-和挂载"><a href="#启动-nginx-和挂载" class="headerlink" title="启动 nginx 和挂载"></a>启动 nginx 和挂载</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx-web -v ~/nginx/www:/usr/share/nginx/html -v ~/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v ~/nginx/logs:/var/log/nginx nginx</span><br></pre></td></tr></table></figure>
 ]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
       <tags>
-        <tag>idea</tag>
-        <tag>spring boot</tag>
+        <tag>Docker</tag>
+        <tag>指令</tag>
       </tags>
   </entry>
   <entry>
@@ -26,7 +16,7 @@
     <url>/2021/03/05/Markdown-%E4%BB%A3%E7%A0%81%E5%9D%97%E8%AF%AD%E6%B3%95%E5%8F%8A%E5%85%B6%E6%94%AF%E6%8C%81%E8%AF%AD%E8%A8%80/</url>
     <content><![CDATA[<h2 id="书写规范-去掉"><a href="#书写规范-去掉" class="headerlink" title="书写规范 (去掉 \)"></a>书写规范 (去掉 \)</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">``` key</span><br><span class="line">  代码段</span><br><span class="line">\``` </span><br></pre></td></tr></table></figure>
 
-<h2 id="支持语言"><a href="#支持语言" class="headerlink" title="支持语言"></a>支持语言</h2><a id="more"></a>
+<h2 id="支持语言"><a href="#支持语言" class="headerlink" title="支持语言"></a>支持语言</h2><span id="more"></span>
 
 <table>
 <thead>
@@ -506,16 +496,17 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
-    <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
-<p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+    <title>IDEA 写 spring boot 实现热部署</title>
+    <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p>这里使用的是 devtools</p>
+<span id="more"></span>
 
-<p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在 pom.xml 中引入指定的依赖<br><img src="/.com//img1.png" alt="图片"></p>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>按下 <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>/</kbd>，选择Registry进入配置界面</p>
+<p><img src="/.com//img2.png" alt="图片"></p>
+<p>找到下图红框中的选项，打上勾</p>
+<p><img src="/.com//img3.png" alt="图片"></p>
+<p>至此即可完成热部署的配置了，此后当修改类文件时，只需在运行情况按下 <kbd>ctrl</kbd>+<kbd>F9</kbd>即可</p>
 ]]></content>
       <categories>
         <category>spring boot 学习</category>
@@ -523,7 +514,6 @@
       <tags>
         <tag>idea</tag>
         <tag>spring boot</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -539,7 +529,7 @@
 <li>.once</li>
 <li>.passive</li>
 </ul>
-<a id="more"></a>
+<span id="more"></span>
 
 <figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 阻止单击事件继续传播 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 提交事件不再重载页面 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">&quot;onSubmit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 修饰符可以串联 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop.prevent</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只有修饰符 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.capture</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只当在 event.target 是当前元素自身时触发处理函数 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即事件不是从内部元素触发的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.self</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
@@ -568,6 +558,27 @@
       </tags>
   </entry>
   <entry>
+    <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
+    <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+<p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo + next 给博客添加新功能</title>
     <url>/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/</url>
     <content><![CDATA[<p>  把用到的一些插件的配置方法记录一下，免得以后忘记了。</p>
@@ -580,33 +591,33 @@
 <li><a href="#search">添加搜索</a></li>
 </ul>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <h2 id="评论插件-Gitalk"><a href="#评论插件-Gitalk" class="headerlink" title="评论插件 Gitalk"></a><a id="gitalk">评论插件 Gitalk</a></h2><p>首先我们需要注册一个<a href="https://github.com/settings/applications/new">Github Application</a></p>
-<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png" alt="图片"></p>
+<p><img src="/.com//img1.png" alt="图片"></p>
 <p>注册完成之后即可获得 Client ID 和 Client Secret</p>
 <p>打开 themes/主题/_config.yml 加入如下配置即可</p>
-<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img2.png" alt="图片"></p>
+<p><img src="/.com//img2.png" alt="图片"></p>
 <p>显示效果就在文章底部哈</p>
 <p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加左边菜单栏默认选项"><a href="#添加左边菜单栏默认选项" class="headerlink" title="添加左边菜单栏默认选项"></a><a id="leftmenu">添加左边菜单栏默认选项</a></h2><p>这个简单，我用的是 next 主题，直接打开主题的 _config.yml，找到 menu 选项，解除想要使用的页面的注释即可。</p>
-<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img3.png" alt="图片"></p>
+<p><img src="/.com//img3.png" alt="图片"></p>
 <p>菜单格式为 /路径/ || fontawesome 图标，可自由更换</p>
-<p>整点效果图<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img4.png" alt="图片"><br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img5.png" alt="图片"></p>
+<p>整点效果图<br><img src="/.com//img4.png" alt="图片"><br><img src="/.com//img5.png" alt="图片"></p>
 <p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加阅读次数"><a href="#添加阅读次数" class="headerlink" title="添加阅读次数"></a><a id="reads">添加阅读次数</a></h2><p>这个我还不懂能不能用，等能用了我再写嘻嘻</p>
 <h2 id="添加相关链接"><a href="#添加相关链接" class="headerlink" title="添加相关链接"></a><a id="links">添加相关链接</a></h2><p>添加相关链接和上面的左边菜单默认选项差不多，直接打开主题的 _config.yml，找到 social 选项如下图改就完事了</p>
-<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img6.png" alt="图片"><br>格式为 地址 || fontawesome 图标，可自由更换</p>
+<p><img src="/.com//img6.png" alt="图片"><br>格式为 地址 || fontawesome 图标，可自由更换</p>
 <p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加搜索"><a href="#添加搜索" class="headerlink" title="添加搜索"></a><a id="search">添加搜索</a></h2><p>要添加搜索功能就得先下 hexo-generator-searchdb</p>
 <p><code>npm install hexo-generator-searchdb --save</code></p>
 <p>接着修改 根目录的 _config.yml,在最底部加上如下配置</p>
-<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#Local Search</span><br><span class="line">search:</span><br><span class="line">path: search.xml</span><br><span class="line">field: post</span><br><span class="line">format: html</span><br><span class="line">limit: <span class="number">10000</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="code"><pre><span class="line">#Local Search</span><br><span class="line"><span class="attr">search</span>:</span><br><span class="line">path: search.xml</span><br><span class="line"><span class="attr">field</span>: post</span><br><span class="line"><span class="attr">format</span>: html</span><br><span class="line"><span class="attr">limit</span>: <span class="number">10000</span></span><br></pre></td></tr></table></figure>
 
 <p>再同步修改 themes 里的 _config.yml，搜索 local_search 修改enable为true</p>
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
-<p>效果如下<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img7.png" alt="图片"></p>
+<p>效果如下<br><img src="/.com//img7.png" alt="图片"></p>
 ]]></content>
       <categories>
         <category>hexo 循序渐进</category>
@@ -623,7 +634,7 @@
     <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
 <p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
 <figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
 <figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
@@ -643,15 +654,35 @@
       </tags>
   </entry>
   <entry>
+    <title>hexo-next 设置首页和归档页的分页数量</title>
+    <url>/2021/03/05/hexo-next-%E8%AE%BE%E7%BD%AE%E9%A6%96%E9%A1%B5%E5%92%8C%E5%BD%92%E6%A1%A3%E9%A1%B5%E7%9A%84%E5%88%86%E9%A1%B5%E6%95%B0%E9%87%8F/</url>
+    <content><![CDATA[<p>首先需要安装下面两个插件 (第一个是首页,第二个是归档页)</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-generator-index</span><br><span class="line">npm install --save hexo-generator-archive</span><br></pre></td></tr></table></figure>
+
+<p>接着去 hexo 项目目录下的 _config.yml 文件找到并且设置下面配置</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 首页分页</span></span><br><span class="line"><span class="attr">index_generator:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">5</span> <span class="comment"># 一页 5 篇</span></span><br><span class="line">  <span class="attr">order_by:</span> <span class="string">-date</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 归档页面 分页</span></span><br><span class="line"><span class="attr">archive_generator:</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">50</span> <span class="comment"># 一页 50 篇</span></span><br><span class="line">  <span class="attr">yearly:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">monthly:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>即设置完成了哈</p>
+]]></content>
+      <categories>
+        <category>hexo 循序渐进</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>next</tag>
+        <tag>插件</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring boot 学习（二）常用注解开发 RESTful 接口</title>
     <url>/2020/10/03/spring-boot-%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91-RESTful-%E6%8E%A5%E5%8F%A3/</url>
-    <content><![CDATA[<h2 id="话不多说直接上代码"><a href="#话不多说直接上代码" class="headerlink" title="话不多说直接上代码"></a>话不多说直接上代码</h2><a id="more"></a>
+    <content><![CDATA[<h2 id="话不多说直接上代码"><a href="#话不多说直接上代码" class="headerlink" title="话不多说直接上代码"></a>话不多说直接上代码</h2><span id="more"></span>
 
 <p>ArticleController.java</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">package</span> com.pjboy.first.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.pjboy.first.AjaxResponse;</span><br><span class="line"><span class="keyword">import</span> com.pjboy.first.model.Article;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: first</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: BLADE</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020-10-02 19:13</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/rest&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Description</span>: 查询一篇文章</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&#123;id&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line">  <span class="meta">@GetMapping(&quot;/articles/&#123;id&#125;&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getArticle</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> </span>&#123;</span><br><span class="line">    Article article = Article.builder()</span><br><span class="line">            .id(<span class="number">1L</span>)</span><br><span class="line">            .author(<span class="string">&quot;blade&quot;</span>)</span><br><span class="line">            .content(<span class="string">&quot;xixixiix&quot;</span>)</span><br><span class="line">            .createTime(<span class="keyword">new</span> Date())</span><br><span class="line">            .title(<span class="string">&quot;tit&quot;</span>)</span><br><span class="line">            .build();</span><br><span class="line">    log.info(<span class="string">&quot;article:&quot;</span> + article);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success(article);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 保存一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&quot;, method = RequestMethod.POST)</span></span><br><span class="line">  <span class="meta">@PostMapping(&quot;/articles/&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">saveArticle</span><span class="params">(<span class="meta">@RequestBody</span> Article article)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 修改一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&quot;, method = RequestMethod.PUT)</span></span><br><span class="line">  <span class="meta">@PutMapping(&quot;/articles/&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">updateArticle</span><span class="params">(<span class="meta">@RequestBody</span> Article article)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//if (article.getId() == null) &#123;</span></span><br><span class="line">      <span class="comment">//TODO 抛出一个自定义的异常</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 删除一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&#123;id&#125;&quot;, method = RequestMethod.DELETE)</span></span><br><span class="line">  <span class="meta">@DeleteMapping(&quot;/articles/&#123;id&#125;&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">deleteArticle</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;deleteArticle:&quot;</span> + id);</span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>AjaxResponse.java</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">package com.pjboy.first;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line"></span><br><span class="line">&#x2F;**</span><br><span class="line"> * @program: first</span><br><span class="line"> * @description:</span><br><span class="line"> * @author: BLADE</span><br><span class="line"> * @create: 2020-10-02 19:19</span><br><span class="line"> **&#x2F;</span><br><span class="line">@Data</span><br><span class="line">public class AjaxResponse &#123;</span><br><span class="line">  private boolean isok;</span><br><span class="line">  private int code; &#x2F;&#x2F; 200、400、500</span><br><span class="line">  private String  message;</span><br><span class="line">  private Object data;</span><br><span class="line">  public AjaxResponse() &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success() &#123;</span><br><span class="line">    AjaxResponse ajaxResponse &#x3D; new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success(Object obj) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse &#x3D; new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line">  public static AjaxResponse success(Object obj, String message) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse &#x3D; new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(message);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package com.pjboy.first;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @program: first</span><br><span class="line"> * @description:</span><br><span class="line"> * @author: BLADE</span><br><span class="line"> * @create: 2020-10-02 19:19</span><br><span class="line"> **/</span><br><span class="line">@Data</span><br><span class="line">public class AjaxResponse &#123;</span><br><span class="line">  private boolean isok;</span><br><span class="line">  private int code; // 200、400、500</span><br><span class="line">  private String  message;</span><br><span class="line">  private Object data;</span><br><span class="line">  public AjaxResponse() &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success() &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success(Object obj) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line">  public static AjaxResponse success(Object obj, String message) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(message);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>spring boot 学习</category>
@@ -680,26 +711,6 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>java</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo-next 设置首页和归档页的分页数量</title>
-    <url>/2021/03/05/hexo-next-%E8%AE%BE%E7%BD%AE%E9%A6%96%E9%A1%B5%E5%92%8C%E5%BD%92%E6%A1%A3%E9%A1%B5%E7%9A%84%E5%88%86%E9%A1%B5%E6%95%B0%E9%87%8F/</url>
-    <content><![CDATA[<p>首先需要安装下面两个插件 (第一个是首页,第二个是归档页)</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">npm install --save hexo-generator-index</span><br><span class="line">npm install --save hexo-generator-archive</span><br></pre></td></tr></table></figure>
-
-<p>接着去 hexo 项目目录下的 _config.yml 文件找到并且设置下面配置</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 首页分页</span></span><br><span class="line"><span class="attr">index_generator:</span></span><br><span class="line">  <span class="attr">path:</span> <span class="string">&#x27;&#x27;</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">5</span> <span class="comment"># 一页 5 篇</span></span><br><span class="line">  <span class="attr">order_by:</span> <span class="string">-date</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 归档页面 分页</span></span><br><span class="line"><span class="attr">archive_generator:</span></span><br><span class="line">  <span class="attr">per_page:</span> <span class="number">50</span> <span class="comment"># 一页 50 篇</span></span><br><span class="line">  <span class="attr">yearly:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">monthly:</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-
-<p>即设置完成了哈</p>
-]]></content>
-      <categories>
-        <category>hexo 循序渐进</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -736,27 +747,27 @@ F -->|5.返回处理结果| B
 <li>于 spring cloud 相通，spring boot 是目前 java 体系内实现微服务的最佳方案</li>
 </ul>
 </blockquote>
-<a id="more"></a>
+<span id="more"></span>
 
 <p>IDE当然是 IDEA 啦，不用Eclipse哈。</p>
 <p>spring boot 并不是说要替代掉 spring 或者是 spring mvc，而是为了让使用者能更加简单地使用它们<br>spring boot 就是基于 spring 的框架的基础上进行一些封装，让 spring 用起来更加简单</p>
 <h2 id="新建项目"><a href="#新建项目" class="headerlink" title="新建项目"></a>新建项目</h2><p>点击新建项目，记得选择 Spring Initializr</p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img1.png" alt="图片"></p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img2.png" alt="图片"></p>
+<p><img src="/.com//img1.png" alt="图片"></p>
+<p><img src="/.com//img2.png" alt="图片"></p>
 <p>然后进入依赖选择，这里选择最基本的 Spring Web 了，其他的以后再讲</p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img3.png" alt="图片"></p>
+<p><img src="/.com//img3.png" alt="图片"></p>
 <p>创建完之后，选择左边的项目目录，下图中高亮的几个文件可以删除，因为在使用 IDEA 这个编辑器，我们可以通过右边栏有个专门管理 maven 的模块使用</p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img4.png" alt="图片" title="可以删除的文件"></p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img5.png" alt="图片" title="maven 模块"></p>
+<p><img src="/.com//img4.png" alt="图片" title="可以删除的文件"></p>
+<p><img src="/.com//img5.png" alt="图片" title="maven 模块"></p>
 <p>在 pom.xml 文件中，我们可以看到刚刚勾选的依赖 spring-boot-starter-web 已经导入到项目中了</p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img6.png" alt="图片" title="spring-boot-starter-web"></p>
+<p><img src="/.com//img6.png" alt="图片" title="spring-boot-starter-web"></p>
 <p>至此项目创建完成</p>
 <h2 id="编写一个简单的-controller"><a href="#编写一个简单的-controller" class="headerlink" title="编写一个简单的 controller"></a>编写一个简单的 controller</h2><p> <kbd>Alt</kbd>+<kbd>insert</kbd> 或者右键选择 New，创建一个 controller 文件夹，并用同样的方法创建一个 HelloController.java 在该文件夹下</p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img7.png" alt="图片" title="创建文件夹和文件"></p>
+<p><img src="/.com//img7.png" alt="图片" title="创建文件夹和文件"></p>
 <p>给 HelloController 类加上注解 @RestController，并且编写一个 hello 方法，该方法拥有一个 name 参数 并返回 hello world 和 name 的组合，并给该方法加上一个对外服务的路径 @RequestMapping(“/hello”)，这样一个简单的 spring boot 的服务接口就完成了</p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img8.png" alt="图片" title="添加注解和方法"></p>
-<h2 id="显示效果在此"><a href="#显示效果在此" class="headerlink" title="显示效果在此"></a>显示效果在此</h2><p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img9.png" alt="图片" title="效果"></p>
-<p><img src="/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/img10.png" alt="图片" title="效果2"></p>
+<p><img src="/.com//img8.png" alt="图片" title="添加注解和方法"></p>
+<h2 id="显示效果在此"><a href="#显示效果在此" class="headerlink" title="显示效果在此"></a>显示效果在此</h2><p><img src="/.com//img9.png" alt="图片" title="效果"></p>
+<p><img src="/.com//img10.png" alt="图片" title="效果2"></p>
 <h2 id="项目结构"><a href="#项目结构" class="headerlink" title="项目结构"></a>项目结构</h2><figure class="highlight html"><table><tr><td class="code"><pre><span class="line">first</span><br><span class="line">├─.idea</span><br><span class="line">│  ├─codeStyles</span><br><span class="line">│  └─libraries</span><br><span class="line">├─.mvn</span><br><span class="line">│  └─wrapper</span><br><span class="line">├─src</span><br><span class="line">│  ├─main</span><br><span class="line">│  │  ├─java   <span class="comment">&lt;!-- 标准 Java存放位置 !--&gt;</span></span><br><span class="line">│  │  │  └─com</span><br><span class="line">│  │  │      └─pjboy</span><br><span class="line">│  │  │          └─first</span><br><span class="line">│  │  │              └─controller</span><br><span class="line">│  │  │              └─FirstApplication.java  <span class="comment">&lt;!-- 入口文件在此 !--&gt;</span></span><br><span class="line">│  │  └─resources <span class="comment">&lt;!-- 资源 !--&gt;</span></span><br><span class="line">│  │      ├─static</span><br><span class="line">│  │      └─templates</span><br><span class="line">│  │      └─application.properties <span class="comment">&lt;!-- 项目全局配置文件在此 !--&gt;</span></span><br><span class="line">│  └─test <span class="comment">&lt;!-- 用于写测试用例 !--&gt;</span></span><br><span class="line">│      └─java</span><br><span class="line">│          └─com</span><br><span class="line">│              └─pjboy</span><br><span class="line">│                  └─first</span><br><span class="line">│                  └─FirstApplicationTests.java</span><br><span class="line">└─target <span class="comment">&lt;!-- 编译结果，字节码等 !--&gt;</span></span><br><span class="line">    ├─classes</span><br><span class="line">    │  └─com</span><br><span class="line">    │      └─pjboy</span><br><span class="line">    │          └─first</span><br><span class="line">    │              └─controller</span><br><span class="line">    ├─generated-sources</span><br><span class="line">    │  └─annotations</span><br><span class="line">    ├─generated-test-sources</span><br><span class="line">    │  └─test-annotations</span><br><span class="line">    └─test-classes</span><br><span class="line">        └─com</span><br><span class="line">            └─pjboy</span><br><span class="line">                └─first</span><br><span class="line">└─pom.xml <span class="comment">&lt;!-- maven 的管理文件 !--&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>

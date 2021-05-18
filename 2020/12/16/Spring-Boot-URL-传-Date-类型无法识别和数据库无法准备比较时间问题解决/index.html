@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+<meta name="generator" content="Hexo 5.4.0">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -257,9 +257,9 @@
       
         <p>首先检测配置文件 application.yml 的 jackson 的设置</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
+<span id="more"></span>
 <p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="function"><span class="params">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
@@ -362,7 +362,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">13</span>
+          <span class="site-state-item-count">14</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -375,7 +375,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">13</span>
+        <span class="site-state-item-count">15</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
