@@ -226,7 +226,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2021-05-19 01:32:41" itemprop="dateModified" datetime="2021-05-19T01:32:41+08:00">2021-05-19</time>
+                <time title="修改时间：2021-05-23 18:36:19" itemprop="dateModified" datetime="2021-05-23T18:36:19+08:00">2021-05-23</time>
               </span>
 
           
@@ -242,6 +242,8 @@
       
           <p>有些指令啊，经常忘记哈哈哈哈。干脆直接记在这里吧！！！</p>
 <h2 id="启动-nginx-和挂载"><a href="#启动-nginx-和挂载" class="headerlink" title="启动 nginx 和挂载"></a>启动 nginx 和挂载</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx-web -v ~/nginx/www:/usr/share/nginx/html -v ~/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v ~/nginx/logs:/var/log/nginx nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="nginx-配置代理"><a href="#nginx-配置代理" class="headerlink" title="nginx 配置代理"></a>nginx 配置代理</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">         proxy_ignore_client_abort on;</span><br><span class="line">          root   /usr/share/nginx/html;</span><br><span class="line">          index  index.html;</span><br><span class="line">      &#125;</span><br><span class="line">  location ^~ /api/ &#123;</span><br><span class="line">      proxy_pass http://121.4.162.86:8081;</span><br><span class="line">      proxy_set_header Host $host:$server_port;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
       
     </div>

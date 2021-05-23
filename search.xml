@@ -5,10 +5,33 @@
     <url>/2021/05/18/Docker-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E8%AE%B0%E5%BD%95/</url>
     <content><![CDATA[<p>有些指令啊，经常忘记哈哈哈哈。干脆直接记在这里吧！！！</p>
 <h2 id="启动-nginx-和挂载"><a href="#启动-nginx-和挂载" class="headerlink" title="启动 nginx 和挂载"></a>启动 nginx 和挂载</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx-web -v ~/nginx/www:/usr/share/nginx/html -v ~/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v ~/nginx/logs:/var/log/nginx nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="nginx-配置代理"><a href="#nginx-配置代理" class="headerlink" title="nginx 配置代理"></a>nginx 配置代理</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">         proxy_ignore_client_abort on;</span><br><span class="line">          root   /usr/share/nginx/html;</span><br><span class="line">          index  index.html;</span><br><span class="line">      &#125;</span><br><span class="line">  location ^~ /api/ &#123;</span><br><span class="line">      proxy_pass http://121.4.162.86:8081;</span><br><span class="line">      proxy_set_header Host $host:$server_port;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <tags>
         <tag>Docker</tag>
         <tag>指令</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>IDEA 写 spring boot 实现热部署</title>
+    <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p>这里使用的是 devtools</p>
+<span id="more"></span>
+
+<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在 pom.xml 中引入指定的依赖<br><img src="/.com//img1.png" alt="图片"></p>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>按下 <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>/</kbd>，选择Registry进入配置界面</p>
+<p><img src="/.com//img2.png" alt="图片"></p>
+<p>找到下图红框中的选项，打上勾</p>
+<p><img src="/.com//img3.png" alt="图片"></p>
+<p>至此即可完成热部署的配置了，此后当修改类文件时，只需在运行情况按下 <kbd>ctrl</kbd>+<kbd>F9</kbd>即可</p>
+]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
       </tags>
   </entry>
   <entry>
@@ -496,17 +519,16 @@
       </tags>
   </entry>
   <entry>
-    <title>IDEA 写 spring boot 实现热部署</title>
-    <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<p>这里使用的是 devtools</p>
+    <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
+    <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
+    <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
+<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
+<p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在 pom.xml 中引入指定的依赖<br><img src="/.com//img1.png" alt="图片"></p>
-<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>按下 <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>/</kbd>，选择Registry进入配置界面</p>
-<p><img src="/.com//img2.png" alt="图片"></p>
-<p>找到下图红框中的选项，打上勾</p>
-<p><img src="/.com//img3.png" alt="图片"></p>
-<p>至此即可完成热部署的配置了，此后当修改类文件时，只需在运行情况按下 <kbd>ctrl</kbd>+<kbd>F9</kbd>即可</p>
+<p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>spring boot 学习</category>
@@ -514,6 +536,7 @@
       <tags>
         <tag>idea</tag>
         <tag>spring boot</tag>
+        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -558,24 +581,28 @@
       </tags>
   </entry>
   <entry>
-    <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
-    <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
-    <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
-<figure class="highlight xml"><table><tr><td class="code"><pre><span class="line">jackson:</span><br><span class="line">  # 全局设置@JsonFormat的格式pattern</span><br><span class="line">  date-format: yyyy-MM-dd HH:mm:ss</span><br><span class="line">  # 当地时区</span><br><span class="line">  locale: zh</span><br><span class="line">  # 设置全局时区</span><br><span class="line">  time-zone: GMT+8</span><br></pre></td></tr></table></figure>
+    <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
+    <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
+    <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
+<p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
 <span id="more"></span>
-<p>然后在 Controller 对应 Api 处接收 Date的地方加上@DateTimeFormat</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@GetMapping(&quot;/main&quot;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getMainArticle</span><span class="params">(<span class="meta">@RequestParam</span> Long pageCurrent,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@RequestParam</span> Long pageSize,</span></span></span><br><span class="line"><span class="params"><span class="function">                                   <span class="meta">@DateTimeFormat(pattern=&quot;yyyy-MM-dd HH:mm:ss&quot;)</span> Date news_time)</span> </span>&#123;</span><br><span class="line">  <span class="comment">//Page&lt;Article&gt; articlePage = new Page&lt;&gt;(1,3,3);</span></span><br><span class="line">  IPage&lt;Article&gt; articleIPage = articleService.selectArticlePage(<span class="keyword">new</span> Page&lt;&gt;(pageCurrent, pageSize), news_time);</span><br><span class="line">  <span class="keyword">return</span> AjaxResponse.success(articleIPage,<span class="string">&quot;获取文章信息成功&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>此时应该已经可以从前台传 Date 类型,并且后台可以识别了。<br>可能有些人会有数据库无法准确比较的问题，原因是数据库的时区和项目的不一致，解决方法是去 my.ini 添加默认时区</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">[mysqld]</span><br><span class="line">default-time_zone = &#x27;+8:00&#x27;</span><br></pre></td></tr></table></figure>
+<p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
+
+<p>接着更新</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd themes/next/source/lib/canvas-nest</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<p>重新构建一下大功告成!</p>
 ]]></content>
       <categories>
-        <category>spring boot 学习</category>
+        <category>hexo 循序渐进</category>
       </categories>
       <tags>
-        <tag>idea</tag>
-        <tag>spring boot</tag>
-        <tag>java</tag>
+        <tag>hexo</tag>
+        <tag>next</tag>
+        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -618,31 +645,6 @@
 <figure class="highlight js"><table><tr><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
 <p>效果如下<br><img src="/.com//img7.png" alt="图片"></p>
-]]></content>
-      <categories>
-        <category>hexo 循序渐进</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-        <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
-    <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
-    <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
-<p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-
-<p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
-
-<p>接着更新</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd themes/next/source/lib/canvas-nest</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
-<p>重新构建一下大功告成!</p>
 ]]></content>
       <categories>
         <category>hexo 循序渐进</category>
