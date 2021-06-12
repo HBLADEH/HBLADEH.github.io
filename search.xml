@@ -14,30 +14,9 @@
       </tags>
   </entry>
   <entry>
-    <title>IDEA 写 spring boot 实现热部署</title>
-    <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
-    <content><![CDATA[<p>这里使用的是 devtools</p>
-<span id="more"></span>
-
-<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在 pom.xml 中引入指定的依赖<br><img src="/.com//img1.png" alt="图片"></p>
-<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>按下 <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>/</kbd>，选择Registry进入配置界面</p>
-<p><img src="/.com//img2.png" alt="图片"></p>
-<p>找到下图红框中的选项，打上勾</p>
-<p><img src="/.com//img3.png" alt="图片"></p>
-<p>至此即可完成热部署的配置了，此后当修改类文件时，只需在运行情况按下 <kbd>ctrl</kbd>+<kbd>F9</kbd>即可</p>
-]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
-      <tags>
-        <tag>idea</tag>
-        <tag>spring boot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Java 八股文</title>
     <url>/2021/06/12/Java-%E5%85%AB%E8%82%A1%E6%96%87/</url>
-    <content><![CDATA[<p>唉八股文，能背说少背多少吧。</p>
+    <content><![CDATA[<p>唉八股文，能背多少背多少吧。</p>
 <span id="more"></span>
 
 <h2 id="Java-基础知识"><a href="#Java-基础知识" class="headerlink" title="Java 基础知识"></a>Java 基础知识</h2><h3 id="Object类相关方法"><a href="#Object类相关方法" class="headerlink" title="Object类相关方法"></a>Object类相关方法</h3><ul>
@@ -572,6 +551,27 @@
       </tags>
   </entry>
   <entry>
+    <title>IDEA 写 spring boot 实现热部署</title>
+    <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<p>这里使用的是 devtools</p>
+<span id="more"></span>
+
+<h2 id="引入依赖"><a href="#引入依赖" class="headerlink" title="引入依赖"></a>引入依赖</h2><p>在 pom.xml 中引入指定的依赖<br><img src="/.com//img1.png" alt="图片"></p>
+<h2 id="修改配置文件"><a href="#修改配置文件" class="headerlink" title="修改配置文件"></a>修改配置文件</h2><p>按下 <kbd>ctrl</kbd>+<kbd>shift</kbd>+<kbd>alt</kbd>+<kbd>/</kbd>，选择Registry进入配置界面</p>
+<p><img src="/.com//img2.png" alt="图片"></p>
+<p>找到下图红框中的选项，打上勾</p>
+<p><img src="/.com//img3.png" alt="图片"></p>
+<p>至此即可完成热部署的配置了，此后当修改类文件时，只需在运行情况按下 <kbd>ctrl</kbd>+<kbd>F9</kbd>即可</p>
+]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
     <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
@@ -590,47 +590,6 @@
         <tag>idea</tag>
         <tag>spring boot</tag>
         <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Vue 学习 事件修饰符</title>
-    <url>/2020/11/01/Vue-%E5%AD%A6%E4%B9%A0-%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
-    <content><![CDATA[<p>在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。</p>
-<p>为了解决这个问题，Vue.js 为 v-on 提供了<strong>事件修饰符</strong>。之前提过，修饰符是由点开头的指令后缀来表示的。</p>
-<ul>
-<li>.stop</li>
-<li>.prevent</li>
-<li>.capture</li>
-<li>.self</li>
-<li>.once</li>
-<li>.passive</li>
-</ul>
-<span id="more"></span>
-
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 阻止单击事件继续传播 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 提交事件不再重载页面 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">&quot;onSubmit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 修饰符可以串联 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop.prevent</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只有修饰符 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.capture</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只当在 event.target 是当前元素自身时触发处理函数 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即事件不是从内部元素触发的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.self</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止<strong>所有</strong>的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</p>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 点击事件将只会触发一次 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.once</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p>不像其它只能对原生的 DOM 事件起作用的修饰符，.once 修饰符还能被用到自定义的组件事件上。</p>
-</blockquote>
-<p>Vue 还对应 addEventListener 中的 passive 选项提供了 .passive 修饰符。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 而不会等待 `onScroll` 完成  --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 这其中包含 `event.preventDefault()` 的情况 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:scroll.passive</span>=<span class="string">&quot;onScroll&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>这个 .passive 修饰符尤其能够提升移动端的性能。</p>
-<blockquote>
-<p>不要把 .passive 和 .prevent 一起使用，因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。请记住，.passive 会告诉浏览器你不想阻止事件的默认行为。</p>
-</blockquote>
-]]></content>
-      <categories>
-        <category>vue 学习</category>
-      </categories>
-      <tags>
-        <tag>vue</tag>
-        <tag>前端</tag>
       </tags>
   </entry>
   <entry>
@@ -709,6 +668,47 @@
       </tags>
   </entry>
   <entry>
+    <title>Vue 学习 事件修饰符</title>
+    <url>/2020/11/01/Vue-%E5%AD%A6%E4%B9%A0-%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
+    <content><![CDATA[<p>在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。</p>
+<p>为了解决这个问题，Vue.js 为 v-on 提供了<strong>事件修饰符</strong>。之前提过，修饰符是由点开头的指令后缀来表示的。</p>
+<ul>
+<li>.stop</li>
+<li>.prevent</li>
+<li>.capture</li>
+<li>.self</li>
+<li>.once</li>
+<li>.passive</li>
+</ul>
+<span id="more"></span>
+
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 阻止单击事件继续传播 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 提交事件不再重载页面 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>=<span class="string">&quot;onSubmit&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 修饰符可以串联 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.stop.prevent</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只有修饰符 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">form</span> <span class="attr">v-on:submit.prevent</span>&gt;</span><span class="tag">&lt;/<span class="name">form</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 添加事件监听器时使用事件捕获模式 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即内部元素触发的事件先在此处理，然后才交由内部元素进行处理 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.capture</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- 只当在 event.target 是当前元素自身时触发处理函数 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 即事件不是从内部元素触发的 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:click.self</span>=<span class="string">&quot;doThat&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>使用修饰符时，顺序很重要；相应的代码会以同样的顺序产生。因此，用 v-on:click.prevent.self 会阻止<strong>所有</strong>的点击，而 v-on:click.self.prevent 只会阻止对元素自身的点击。</p>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 点击事件将只会触发一次 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">a</span> <span class="attr">v-on:click.once</span>=<span class="string">&quot;doThis&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">a</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>不像其它只能对原生的 DOM 事件起作用的修饰符，.once 修饰符还能被用到自定义的组件事件上。</p>
+</blockquote>
+<p>Vue 还对应 addEventListener 中的 passive 选项提供了 .passive 修饰符。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 滚动事件的默认行为 (即滚动行为) 将会立即触发 --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 而不会等待 `onScroll` 完成  --&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- 这其中包含 `event.preventDefault()` 的情况 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-on:scroll.passive</span>=<span class="string">&quot;onScroll&quot;</span>&gt;</span>...<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这个 .passive 修饰符尤其能够提升移动端的性能。</p>
+<blockquote>
+<p>不要把 .passive 和 .prevent 一起使用，因为 .prevent 将会被忽略，同时浏览器可能会向你展示一个警告。请记住，.passive 会告诉浏览器你不想阻止事件的默认行为。</p>
+</blockquote>
+]]></content>
+      <categories>
+        <category>vue 学习</category>
+      </categories>
+      <tags>
+        <tag>vue</tag>
+        <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo-next 设置首页和归档页的分页数量</title>
     <url>/2021/03/05/hexo-next-%E8%AE%BE%E7%BD%AE%E9%A6%96%E9%A1%B5%E5%92%8C%E5%BD%92%E6%A1%A3%E9%A1%B5%E7%9A%84%E5%88%86%E9%A1%B5%E6%95%B0%E9%87%8F/</url>
     <content><![CDATA[<p>首先需要安装下面两个插件 (第一个是首页,第二个是归档页)</p>
@@ -748,6 +748,25 @@
       </tags>
   </entry>
   <entry>
+    <title>写 spring boot 时的一些插件推荐（IDEA）</title>
+    <url>/2020/10/02/%E5%86%99-spring-boot-%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%88IDEA%EF%BC%89/</url>
+    <content><![CDATA[<p>一些插件的推荐，具体看下面</p>
+<blockquote>
+<ul>
+<li><a href="#lombok">lombok 通过注解生成一些基本代码</a></li>
+</ul>
+</blockquote>
+<h2 id="lombok"><a href="#lombok" class="headerlink" title=" lombok"></a><a id="lombok"> lombok</a></h2>]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>spring boot 请求处理流程</title>
     <url>/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/</url>
     <content><![CDATA[<h2 id="流程图在此"><a href="#流程图在此" class="headerlink" title="流程图在此"></a>流程图在此</h2><pre class="mermaid" style="text-align: center;">
@@ -766,25 +785,6 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>java</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>写 spring boot 时的一些插件推荐（IDEA）</title>
-    <url>/2020/10/02/%E5%86%99-spring-boot-%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%88IDEA%EF%BC%89/</url>
-    <content><![CDATA[<p>一些插件的推荐，具体看下面</p>
-<blockquote>
-<ul>
-<li><a href="#lombok">lombok 通过注解生成一些基本代码</a></li>
-</ul>
-</blockquote>
-<h2 id="lombok"><a href="#lombok" class="headerlink" title=" lombok"></a><a id="lombok"> lombok</a></h2>]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
-      <tags>
-        <tag>idea</tag>
-        <tag>spring boot</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
@@ -834,14 +834,6 @@ F -->|5.返回处理结果| B
       </tags>
   </entry>
   <entry>
-    <title>测试文章</title>
-    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
-      <tags>
-        <tag>第一次使用</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
     <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
     <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
@@ -871,6 +863,14 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>面试</tag>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测试文章</title>
+    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
+      <tags>
+        <tag>第一次使用</tag>
       </tags>
   </entry>
 </search>
