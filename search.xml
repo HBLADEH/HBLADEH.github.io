@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>Docker 的一些指令记录</title>
+    <url>/2021/05/18/Docker-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E8%AE%B0%E5%BD%95/</url>
+    <content><![CDATA[<p>有些指令啊，经常忘记哈哈哈哈。干脆直接记在这里吧！！！</p>
+<h2 id="启动-nginx-和挂载"><a href="#启动-nginx-和挂载" class="headerlink" title="启动 nginx 和挂载"></a>启动 nginx 和挂载</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx-web -v ~/nginx/www:/usr/share/nginx/html -v ~/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v ~/nginx/logs:/var/log/nginx nginx</span><br></pre></td></tr></table></figure>
+
+<h2 id="nginx-配置代理"><a href="#nginx-配置代理" class="headerlink" title="nginx 配置代理"></a>nginx 配置代理</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">         proxy_ignore_client_abort on;</span><br><span class="line">          root   /usr/share/nginx/html;</span><br><span class="line">          index  index.html;</span><br><span class="line">      &#125;</span><br><span class="line">  location ^~ /api/ &#123;</span><br><span class="line">      proxy_pass http://121.4.162.86:8081;</span><br><span class="line">      proxy_set_header Host $host:$server_port;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+]]></content>
+      <tags>
+        <tag>Docker</tag>
+        <tag>指令</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>IDEA 写 spring boot 实现热部署</title>
     <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p>这里使用的是 devtools</p>
@@ -19,19 +32,6 @@
       <tags>
         <tag>idea</tag>
         <tag>spring boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Docker 的一些指令记录</title>
-    <url>/2021/05/18/Docker-%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8C%87%E4%BB%A4%E8%AE%B0%E5%BD%95/</url>
-    <content><![CDATA[<p>有些指令啊，经常忘记哈哈哈哈。干脆直接记在这里吧！！！</p>
-<h2 id="启动-nginx-和挂载"><a href="#启动-nginx-和挂载" class="headerlink" title="启动 nginx 和挂载"></a>启动 nginx 和挂载</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">docker run -d -p 80:80 --name nginx-web -v ~/nginx/www:/usr/share/nginx/html -v ~/nginx/conf/nginx.conf:/etc/nginx/nginx.conf -v ~/nginx/logs:/var/log/nginx nginx</span><br></pre></td></tr></table></figure>
-
-<h2 id="nginx-配置代理"><a href="#nginx-配置代理" class="headerlink" title="nginx 配置代理"></a>nginx 配置代理</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">location / &#123;</span><br><span class="line">         proxy_ignore_client_abort on;</span><br><span class="line">          root   /usr/share/nginx/html;</span><br><span class="line">          index  index.html;</span><br><span class="line">      &#125;</span><br><span class="line">  location ^~ /api/ &#123;</span><br><span class="line">      proxy_pass http://121.4.162.86:8081;</span><br><span class="line">      proxy_set_header Host $host:$server_port;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-]]></content>
-      <tags>
-        <tag>Docker</tag>
-        <tag>指令</tag>
       </tags>
   </entry>
   <entry>
@@ -107,9 +107,19 @@
 <li>LinkedList 基于链表实现，1.7 为双向链表，1.6为双向循环链表，取消循环能更好地分清头尾。</li>
 </ul>
 <h2 id="Map-Key-Value"><a href="#Map-Key-Value" class="headerlink" title="Map (Key, Value)"></a>Map (Key, Value)</h2><ul>
-<li>HashMap<ol>
+<li><p>HashMap</p>
+<ol>
 <li>底层为数据结构，JDK1.8 是<strong>数组 + 链表 + 红黑树</strong>，JDK1.7 无红黑树。链表长度大于8时，转化为红黑树，优化查询效率。</li>
 <li>初始容量为 <strong>16</strong>，通过<code>tableSizeFor</code>保证容量为 2 的幂次方。寻址方式，高位异或，**(n-1)&amp;h** 取模，优化速度。</li>
+<li>扩容机制，当元素数量大于容量 x 负载因子 0.75 时，容量扩大为原来的 2 倍，新建一个数组，然后转移到新的数组。</li>
+<li>基于 Map 实现。</li>
+<li>线程不安全。</li>
+</ol>
+</li>
+<li><p>HashMap(1.7) 多线程循环链表问题</p>
+<ol>
+<li>在多线程环境下，进行扩容时，1.7下的 HashMap 会形成循环链表。</li>
+<li>则么形成循环链表: 假设有一 HashMap 容量为 2，在数组下标 1 位置以 A -&gt; B 链表形式存储。有以线程对该 map 做 put 操作，由于触发扩容条件，需要进行扩容。这时另一个线程也 put 操作，同样需要扩容，并完成了扩容操作，由于复制到新数组是头部插入，所以 1 位置变为 B -&gt; A 。这时第一个线程继续做扩容操作，首先复制 A ，然后复制 B ，再判断 B.next 是否为空时，由于第二个线程做了扩容操作，导致 B.next = A，所以在将 A 放到 B 前，A.next 又等于 B ，导致循环链表出现。</li>
 </ol>
 </li>
 </ul>
@@ -670,27 +680,6 @@
       </tags>
   </entry>
   <entry>
-    <title>spring boot 请求处理流程</title>
-    <url>/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/</url>
-    <content><![CDATA[<h2 id="流程图在此"><a href="#流程图在此" class="headerlink" title="流程图在此"></a>流程图在此</h2><pre class="mermaid" style="text-align: center;">
-            graph TD
-            A[请求发送者] -->|1.发送请求| B[DispatchServlet]
-B -->|2.查找匹配Handler| C[HandlerMapping]
-B -->|3.调用适配器| D[HandlerAdapter]
-D -->|4.处理业务请求| E(Handler controller)
-D --> F(ModelAndView)
-F -->|5.返回处理结果| B
-          </pre>
-]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
     <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
     <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
@@ -805,6 +794,46 @@ F -->|5.返回处理结果| B
       </tags>
   </entry>
   <entry>
+    <title>写 spring boot 时的一些插件推荐（IDEA）</title>
+    <url>/2020/10/02/%E5%86%99-spring-boot-%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%88IDEA%EF%BC%89/</url>
+    <content><![CDATA[<p>一些插件的推荐，具体看下面</p>
+<blockquote>
+<ul>
+<li><a href="#lombok">lombok 通过注解生成一些基本代码</a></li>
+</ul>
+</blockquote>
+<h2 id="lombok"><a href="#lombok" class="headerlink" title=" lombok"></a><a id="lombok"> lombok</a></h2>]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>idea</tag>
+        <tag>spring boot</tag>
+        <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>spring boot 请求处理流程</title>
+    <url>/2020/10/03/spring-boot-%E8%AF%B7%E6%B1%82%E5%A4%84%E7%90%86%E6%B5%81%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="流程图在此"><a href="#流程图在此" class="headerlink" title="流程图在此"></a>流程图在此</h2><pre class="mermaid" style="text-align: center;">
+            graph TD
+            A[请求发送者] -->|1.发送请求| B[DispatchServlet]
+B -->|2.查找匹配Handler| C[HandlerMapping]
+B -->|3.调用适配器| D[HandlerAdapter]
+D -->|4.处理业务请求| E(Handler controller)
+D --> F(ModelAndView)
+F -->|5.返回处理结果| B
+          </pre>
+]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>spring-boot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>学习 spring boot（一）新建项目，项目结构解析</title>
     <url>/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<p>上来我直接列出 spring boot 的优点:</p>
@@ -848,25 +877,6 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>java</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>写 spring boot 时的一些插件推荐（IDEA）</title>
-    <url>/2020/10/02/%E5%86%99-spring-boot-%E6%97%B6%E7%9A%84%E4%B8%80%E4%BA%9B%E6%8F%92%E4%BB%B6%E6%8E%A8%E8%8D%90%EF%BC%88IDEA%EF%BC%89/</url>
-    <content><![CDATA[<p>一些插件的推荐，具体看下面</p>
-<blockquote>
-<ul>
-<li><a href="#lombok">lombok 通过注解生成一些基本代码</a></li>
-</ul>
-</blockquote>
-<h2 id="lombok"><a href="#lombok" class="headerlink" title=" lombok"></a><a id="lombok"> lombok</a></h2>]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
-      <tags>
-        <tag>idea</tag>
-        <tag>spring boot</tag>
-        <tag>java</tag>
       </tags>
   </entry>
   <entry>
