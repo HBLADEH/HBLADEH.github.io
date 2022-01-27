@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="generator" content="Hexo 5.4.1">
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -29,13 +29,13 @@
 <meta property="og:site_name" content="PJ的博客">
 <meta property="og:description" content="把用到的一些插件的配置方法记录一下，免得以后忘记了。 目录  评论插件 Gitalk 添加左边菜单栏默认选项 添加阅读次数 添加相关链接 添加搜索">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://example.com/.com//img1.png">
-<meta property="og:image" content="http://example.com/.com//img2.png">
-<meta property="og:image" content="http://example.com/.com//img3.png">
-<meta property="og:image" content="http://example.com/.com//img4.png">
-<meta property="og:image" content="http://example.com/.com//img5.png">
-<meta property="og:image" content="http://example.com/.com//img6.png">
-<meta property="og:image" content="http://example.com/.com//img7.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img2.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img3.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img4.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img5.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img6.png">
+<meta property="og:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img7.png">
 <meta property="article:published_time" content="2020-10-01T02:10:20.000Z">
 <meta property="article:modified_time" content="2021-03-05T05:10:40.995Z">
 <meta property="article:author" content="BLADE">
@@ -43,7 +43,7 @@
 <meta property="article:tag" content="next">
 <meta property="article:tag" content="插件">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://example.com/.com//img1.png">
+<meta name="twitter:image" content="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png">
 
 <link rel="canonical" href="http://example.com/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/">
 
@@ -282,20 +282,20 @@
 <span id="more"></span>
 
 <h2 id="评论插件-Gitalk"><a href="#评论插件-Gitalk" class="headerlink" title="评论插件 Gitalk"></a><a id="gitalk">评论插件 Gitalk</a></h2><p>首先我们需要注册一个<a target="_blank" rel="noopener" href="https://github.com/settings/applications/new">Github Application</a></p>
-<p><img src="/.com//img1.png" alt="图片"></p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img1.png" alt="图片"></p>
 <p>注册完成之后即可获得 Client ID 和 Client Secret</p>
 <p>打开 themes/主题/_config.yml 加入如下配置即可</p>
-<p><img src="/.com//img2.png" alt="图片"></p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img2.png" alt="图片"></p>
 <p>显示效果就在文章底部哈</p>
 <p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加左边菜单栏默认选项"><a href="#添加左边菜单栏默认选项" class="headerlink" title="添加左边菜单栏默认选项"></a><a id="leftmenu">添加左边菜单栏默认选项</a></h2><p>这个简单，我用的是 next 主题，直接打开主题的 _config.yml，找到 menu 选项，解除想要使用的页面的注释即可。</p>
-<p><img src="/.com//img3.png" alt="图片"></p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img3.png" alt="图片"></p>
 <p>菜单格式为 /路径/ || fontawesome 图标，可自由更换</p>
-<p>整点效果图<br><img src="/.com//img4.png" alt="图片"><br><img src="/.com//img5.png" alt="图片"></p>
+<p>整点效果图<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img4.png" alt="图片"><br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img5.png" alt="图片"></p>
 <p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加阅读次数"><a href="#添加阅读次数" class="headerlink" title="添加阅读次数"></a><a id="reads">添加阅读次数</a></h2><p>这个我还不懂能不能用，等能用了我再写嘻嘻</p>
 <h2 id="添加相关链接"><a href="#添加相关链接" class="headerlink" title="添加相关链接"></a><a id="links">添加相关链接</a></h2><p>添加相关链接和上面的左边菜单默认选项差不多，直接打开主题的 _config.yml，找到 social 选项如下图改就完事了</p>
-<p><img src="/.com//img6.png" alt="图片"><br>格式为 地址 || fontawesome 图标，可自由更换</p>
+<p><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img6.png" alt="图片"><br>格式为 地址 || fontawesome 图标，可自由更换</p>
 <p><a href="#menu">回到顶部👆</a></p>
 <h2 id="添加搜索"><a href="#添加搜索" class="headerlink" title="添加搜索"></a><a id="search">添加搜索</a></h2><p>要添加搜索功能就得先下 hexo-generator-searchdb</p>
 <p><code>npm install hexo-generator-searchdb --save</code></p>
@@ -305,7 +305,7 @@
 <p>再同步修改 themes 里的 _config.yml，搜索 local_search 修改enable为true</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">local_search:</span><br><span class="line">  enable: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 
-<p>效果如下<br><img src="/.com//img7.png" alt="图片"></p>
+<p>效果如下<br><img src="/2020/10/01/hexo-next-%E7%BB%99%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD/img7.png" alt="图片"></p>
 
     </div>
 
@@ -406,20 +406,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-count">18</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-count">23</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -454,7 +454,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
