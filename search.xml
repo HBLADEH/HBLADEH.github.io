@@ -14,32 +14,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Golang GC垃圾回收机制</title>
-    <url>/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
-    <content><![CDATA[<h2 id="Golang-历代GC设计"><a href="#Golang-历代GC设计" class="headerlink" title="Golang 历代GC设计"></a>Golang 历代GC设计</h2><ol>
-<li>Go V1.3 之前使用标记清除 (mark &amp; sweep)</li>
-<li>Go V1.5 使用三色标记法</li>
-<li>Go V1.8 使用混合写屏障机制<span id="more"></span>
-
-</li>
-</ol>
-<h2 id="1-标记清除"><a href="#1-标记清除" class="headerlink" title="1. 标记清除"></a>1. 标记清除</h2><p>在程序运行过程中，会出现有些对象没能直接被程序引用到，GC检测到则会触发 STW(Stop The World)暂停程序业务逻辑。</p>
-<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img1.png" alt="图片"></p>
-<p>之后则会对可达的对象 1-2-3，4-7 做上标记。</p>
-<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img2.png" alt="图片"></p>
-<p>其余的对象 5，6 因为是不可达，则被GC回收。</p>
-<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img3.png" alt="图片"></p>
-<p>回收操作自此已经完成，STW暂停解除。程序将继续运行，然后循环重复这个过程，直到程序的生命周期结束。</p>
-]]></content>
-      <categories>
-        <category>Golang 学习</category>
-      </categories>
-      <tags>
-        <tag>Golang</tag>
-        <tag>GC垃圾回收</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>IDEA 写 spring boot 实现热部署</title>
     <url>/2020/10/02/IDEA-%E5%86%99-spring-boot-%E5%AE%9E%E7%8E%B0%E7%83%AD%E9%83%A8%E7%BD%B2/</url>
     <content><![CDATA[<p>这里使用的是 devtools</p>
@@ -61,116 +35,47 @@
       </tags>
   </entry>
   <entry>
-    <title>Java 八股文</title>
-    <url>/2021/06/12/Java-%E5%85%AB%E8%82%A1%E6%96%87/</url>
-    <content><![CDATA[<p>唉八股文，能背多少背多少吧。</p>
-<span id="more"></span>
-<p><a href="https://blog.csdn.net/qq_23696693/article/details/108406217">原文</a></p>
-<h2 id="Java-基础知识"><a href="#Java-基础知识" class="headerlink" title="Java 基础知识"></a>Java 基础知识</h2><h3 id="Object类相关方法"><a href="#Object类相关方法" class="headerlink" title="Object类相关方法"></a>Object类相关方法</h3><ul>
-<li>getClass 获取当前运行时对象的 Class 对象</li>
-<li>hashCode 返回对象的 hash 码</li>
-<li>clone 拷贝当前对象，必须实现 Cloneable 接口。<strong>浅拷贝</strong>对基本类型进行值拷贝，对引用类型拷贝引用；<strong>深拷贝</strong>对基本类型进行值拷贝，对引用类型对象不但拷贝对象的引用害拷贝对象的相关属性和方法。两者不同在与深拷贝创建了一个新的对象。</li>
-<li>equas 通过内存地址比较两个对象是否相等，String 类重写了这个方法使用值来比较是否相等。</li>
-<li>toString 返回类名@哈希码的 16 进制。</li>
-<li>notify 唤醒当前对象监视器的任意一个线程。</li>
-<li>notifyAll 唤醒当前对象监视器上的所有线程。</li>
-<li>wait<ol>
-<li>暂停线程的执行</li>
-<li>三个不同参数方法（等待多少毫秒；额外等待多少毫秒；一直等待）</li>
-<li>与<code>Thread.sleep(long time)</code>相比，sleep 使当前线程休眠一段时间，并没有释放该对象的锁，wait 释放了锁。</li>
-</ol>
+    <title>Golang GC垃圾回收机制</title>
+    <url>/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
+    <content><![CDATA[<h2 id="Golang-历代GC设计"><a href="#Golang-历代GC设计" class="headerlink" title="Golang 历代GC设计"></a>Golang 历代GC设计</h2><ol>
+<li>Go V1.3 之前使用标记清除 (mark &amp; sweep)</li>
+<li>Go V1.5 使用三色标记法</li>
+<li>Go V1.8 使用混合写屏障机制<span id="more"></span>
+
 </li>
-<li>finalize 对象被垃圾回收器回收时执行的方法。</li>
-</ul>
-<h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><ul>
-<li>整形: byte(8)、short(16)、int(32)、long(64)</li>
-<li>浮点型: float(32)、double(64)</li>
-<li>布尔型: boolean(8)</li>
-<li>字符型: char(16)</li>
-</ul>
-<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>Java 对象实现序列化要实现 Serializable 接口。</p>
-<ul>
-<li>反序列化并不会调用构造方法。反序列的对象是由 JVM 自己生成的对象，不通过构造方法生成。</li>
-<li>序列化对象的引用类型成员变量，使用 transient 修饰。</li>
-<li>如果想让某个变量不被序列化，使用 transient 修饰。</li>
-<li>单例类序列化，需要重写<code>readResolve()</code>方法。</li>
-</ul>
-<h3 id="String、StringBuffer、StringBuilder"><a href="#String、StringBuffer、StringBuilder" class="headerlink" title="String、StringBuffer、StringBuilder"></a>String、StringBuffer、StringBuilder</h3><ul>
-<li>String 由 char[] 数组构成，使用了 final 修饰，是不可变对象，可以理解为常量，线程安全；对 String 进行改变时每次都会新生成一个 String 对象，然后把指针指向新的运用对象。</li>
-<li>StringBuffer 线程安全；StringBuilder 线程不安全</li>
-<li>操作少量字符串用 String；单线程操作大量数据用 StringBuilder；多线程操作大量数据用 StringBuffer。</li>
-</ul>
-<h3 id="重载与重写"><a href="#重载与重写" class="headerlink" title="重载与重写"></a>重载与重写</h3><ul>
-<li>重载: 发生在同一个类，方法名相同，参数的类型、个数、顺序不同，方法的返回值和修饰符可以不同。</li>
-<li>重写: 发生在父子类中，方法名和参数相同，返回值范围小于等于父类，抛出的异常范围小于等于父类，访问修饰符范围大于等于父类；如果父类方法访问修饰符为 private 或者 final 则子类就不能重写该方法。</li>
-</ul>
-<h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><ul>
-<li>修饰基本类型变量，初始化后就不能够对其进行修改。</li>
-<li>修饰引用类型变量，不能够指向另一个引用。</li>
-<li>修饰类或方法，不能被继承或重写。</li>
-</ul>
-<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><ul>
-<li>在运行时动态地获取类的完整信息</li>
-<li>增加程序的灵活性</li>
-<li>JDK 动态代理使用了反射</li>
-</ul>
-<h3 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h3><ul>
-<li>使用步骤<ol>
-<li>在创建接口及实现类</li>
-<li>实现代理处理器<code>InvokationHandler</code>，实现<code>invoke(Proxy proxy, Method method, Object[] args)</code></li>
-<li>通过<code>Proxy.newProxyInstance(ClassLoaderLoader, Class[] interfaces, InvocationHandler h)</code>获得代理类</li>
-<li>通过代理类调用方法</li>
 </ol>
-</li>
-</ul>
-<h3 id="Java-IO"><a href="#Java-IO" class="headerlink" title="Java IO"></a>Java IO</h3><ul>
-<li>普通 IO，面向流，同步阻塞线程。</li>
-<li>NIO，面向缓冲区，同步非阻塞。</li>
-</ul>
-<h2 id="Java-集合框架"><a href="#Java-集合框架" class="headerlink" title="Java 集合框架"></a>Java 集合框架</h2><h3 id="List-线性结构"><a href="#List-线性结构" class="headerlink" title="List (线性结构)"></a>List (线性结构)</h3><ul>
-<li>ArrayList Object[] 数组实现，默认大小为 10，支持随机访问，连续内存空间，插入末尾时间复杂度 O(1)，插入第 i 个位置时间复杂度 O(n-i)。扩容，大小变为 1.5 倍，Arrays.copyOf(底层为 System.ArrayCopy)，复制倒新数组，指针指向新数组。</li>
-<li>Vector 类似 ArrayList，线程安全，扩容默认增长为原来的两倍，还可以指定增长空间长度。</li>
-<li>LinkedList 基于链表实现，1.7 为双向链表，1.6为双向循环链表，取消循环能更好地分清头尾。</li>
-</ul>
-<h3 id="Map-Key-Value"><a href="#Map-Key-Value" class="headerlink" title="Map (Key, Value)"></a>Map (Key, Value)</h3><ul>
-<li><p>HashMap</p>
+<h2 id="1-标记清除"><a href="#1-标记清除" class="headerlink" title="1. 标记清除"></a>1. 标记清除</h2><p>在程序运行过程中，会出现有些对象没能直接被程序引用到，GC检测到则会触发 STW(Stop The World)暂停程序业务逻辑。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img1.png" alt="图片"></p>
+<p>之后则会对可达的对象 1-2-3，4-7 做上标记。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img2.png" alt="图片"></p>
+<p>其余的对象 5，6 因为是不可达，则被GC回收。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img3.png" alt="图片"></p>
+<p>回收操作自此已经完成，STW暂停解除。程序将继续运行，然后循环重复这个过程，直到程序的生命周期结束。</p>
+<p>标记清除的缺点</p>
 <ol>
-<li>底层为数据结构，JDK1.8 是<strong>数组 + 链表 + 红黑树</strong>，JDK1.7 无红黑树。链表长度大于8时，转化为红黑树，优化查询效率。</li>
-<li>初始容量为 <strong>16</strong>，通过<code>tableSizeFor</code>保证容量为 2 的幂次方。寻址方式，高位异或，**(n-1)&amp;h** 取模，优化速度。</li>
-<li>扩容机制，当元素数量大于容量 x 负载因子 0.75 时，容量扩大为原来的 2 倍，新建一个数组，然后转移到新的数组。</li>
-<li>基于 Map 实现。</li>
-<li>线程不安全。</li>
+<li>STW 暂停会让程序出现卡顿 (影响最大)</li>
+<li>需要扫描所有的节点，判断其是否可达</li>
+<li>删除数据会导致产生碎片，对这些碎片的重用或重组比较繁琐</li>
 </ol>
-</li>
-<li><p>HashMap(1.7) 多线程循环链表问题</p>
-<ol>
-<li>在多线程环境下，进行扩容时，1.7下的 HashMap 会形成循环链表。</li>
-<li>则么形成循环链表: 假设有一 HashMap 容量为 2，在数组下标 1 位置以 A -&gt; B 链表形式存储。有以线程对该 map 做 put 操作，由于触发扩容条件，需要进行扩容。这时另一个线程也 put 操作，同样需要扩容，并完成了扩容操作，由于复制到新数组是头部插入，所以 1 位置变为 B -&gt; A 。这时第一个线程继续做扩容操作，首先复制 A ，然后复制 B ，再判断 B.next 是否为空时，由于第二个线程做了扩容操作，导致 B.next = A，所以在将 A 放到 B 前，A.next 又等于 B ，导致循环链表出现。</li>
-</ol>
-</li>
-<li><p>HashTable</p>
-<ul>
-<li>线程安全, 方法基本是用 Synchronized 修饰</li>
-<li>初始容量为 11, 扩容为 2n+1</li>
-<li>继承 Dictionary 类。</li>
-</ul>
-</li>
-<li><p>ConcurrentHashMap</p>
-<ul>
-<li>线程安全的 HashMap。</li>
-<li>1.7 采用分段锁的形式加锁; 1.8 使用 Synchronized 和 CAS 实现同步, 若数组的 Node 为空, 则通过 CAS 的方式设置值, 不为空则加在链表的第一个结点。获取第一个元素是否为空使用 Unsafe 类提供的 getObjectVolatile 保证可见性。</li>
-<li>对于读操作, 数组由 volatile 修饰, 同时数组元素为 Node, Node 的 K 使用 final 修饰, V 使用 volatile 修饰, 下一个结点也用 volatile 修饰, 保证多线程的可见性</li>
-</ul>
-</li>
-</ul>
+<p>原 STW 流程<br>启动STW -&gt; Mark标记 -&gt; Sweep清除 -&gt; 停止STW</p>
+<p>为了缩短STW暂停程序的时间，把Sweep清除步骤放到了后面<br>启动STW -&gt; Mark标记 -&gt;  停止STW -&gt; Sweep清除</p>
+<h2 id="2-三色标记法"><a href="#2-三色标记法" class="headerlink" title="2. 三色标记法"></a>2. 三色标记法</h2><p>一种优化之前Mark标记法的方法。</p>
+<p>标记分为白色、灰色、黑色三种。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img4.png" alt="图片"></p>
+<p>初始状态所有的节点都是白色标记。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img5.png" alt="图片"></p>
+<p>从根节点开始往下遍历一层，给此时可达的节点打上灰色标记。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img6.png" alt="图片"></p>
+<p>接着遍历灰色节点的标记，给可达的节点打上灰色标记，而原来被遍历的节点则打上黑色标记。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img7.png" alt="图片"></p>
+<p>往后重复以上动作，直至没有灰色对象，收集所有白色对象，此时白色对象是垃圾。</p>
 ]]></content>
       <categories>
-        <category>面试知识点</category>
+        <category>Golang 学习</category>
       </categories>
       <tags>
-        <tag>Java</tag>
-        <tag>面试</tag>
-        <tag>八股文</tag>
+        <tag>Golang</tag>
+        <tag>GC垃圾回收</tag>
       </tags>
   </entry>
   <entry>
@@ -658,6 +563,119 @@
       </tags>
   </entry>
   <entry>
+    <title>Java 八股文</title>
+    <url>/2021/06/12/Java-%E5%85%AB%E8%82%A1%E6%96%87/</url>
+    <content><![CDATA[<p>唉八股文，能背多少背多少吧。</p>
+<span id="more"></span>
+<p><a href="https://blog.csdn.net/qq_23696693/article/details/108406217">原文</a></p>
+<h2 id="Java-基础知识"><a href="#Java-基础知识" class="headerlink" title="Java 基础知识"></a>Java 基础知识</h2><h3 id="Object类相关方法"><a href="#Object类相关方法" class="headerlink" title="Object类相关方法"></a>Object类相关方法</h3><ul>
+<li>getClass 获取当前运行时对象的 Class 对象</li>
+<li>hashCode 返回对象的 hash 码</li>
+<li>clone 拷贝当前对象，必须实现 Cloneable 接口。<strong>浅拷贝</strong>对基本类型进行值拷贝，对引用类型拷贝引用；<strong>深拷贝</strong>对基本类型进行值拷贝，对引用类型对象不但拷贝对象的引用害拷贝对象的相关属性和方法。两者不同在与深拷贝创建了一个新的对象。</li>
+<li>equas 通过内存地址比较两个对象是否相等，String 类重写了这个方法使用值来比较是否相等。</li>
+<li>toString 返回类名@哈希码的 16 进制。</li>
+<li>notify 唤醒当前对象监视器的任意一个线程。</li>
+<li>notifyAll 唤醒当前对象监视器上的所有线程。</li>
+<li>wait<ol>
+<li>暂停线程的执行</li>
+<li>三个不同参数方法（等待多少毫秒；额外等待多少毫秒；一直等待）</li>
+<li>与<code>Thread.sleep(long time)</code>相比，sleep 使当前线程休眠一段时间，并没有释放该对象的锁，wait 释放了锁。</li>
+</ol>
+</li>
+<li>finalize 对象被垃圾回收器回收时执行的方法。</li>
+</ul>
+<h3 id="基本数据类型"><a href="#基本数据类型" class="headerlink" title="基本数据类型"></a>基本数据类型</h3><ul>
+<li>整形: byte(8)、short(16)、int(32)、long(64)</li>
+<li>浮点型: float(32)、double(64)</li>
+<li>布尔型: boolean(8)</li>
+<li>字符型: char(16)</li>
+</ul>
+<h3 id="序列化"><a href="#序列化" class="headerlink" title="序列化"></a>序列化</h3><p>Java 对象实现序列化要实现 Serializable 接口。</p>
+<ul>
+<li>反序列化并不会调用构造方法。反序列的对象是由 JVM 自己生成的对象，不通过构造方法生成。</li>
+<li>序列化对象的引用类型成员变量，使用 transient 修饰。</li>
+<li>如果想让某个变量不被序列化，使用 transient 修饰。</li>
+<li>单例类序列化，需要重写<code>readResolve()</code>方法。</li>
+</ul>
+<h3 id="String、StringBuffer、StringBuilder"><a href="#String、StringBuffer、StringBuilder" class="headerlink" title="String、StringBuffer、StringBuilder"></a>String、StringBuffer、StringBuilder</h3><ul>
+<li>String 由 char[] 数组构成，使用了 final 修饰，是不可变对象，可以理解为常量，线程安全；对 String 进行改变时每次都会新生成一个 String 对象，然后把指针指向新的运用对象。</li>
+<li>StringBuffer 线程安全；StringBuilder 线程不安全</li>
+<li>操作少量字符串用 String；单线程操作大量数据用 StringBuilder；多线程操作大量数据用 StringBuffer。</li>
+</ul>
+<h3 id="重载与重写"><a href="#重载与重写" class="headerlink" title="重载与重写"></a>重载与重写</h3><ul>
+<li>重载: 发生在同一个类，方法名相同，参数的类型、个数、顺序不同，方法的返回值和修饰符可以不同。</li>
+<li>重写: 发生在父子类中，方法名和参数相同，返回值范围小于等于父类，抛出的异常范围小于等于父类，访问修饰符范围大于等于父类；如果父类方法访问修饰符为 private 或者 final 则子类就不能重写该方法。</li>
+</ul>
+<h3 id="final"><a href="#final" class="headerlink" title="final"></a>final</h3><ul>
+<li>修饰基本类型变量，初始化后就不能够对其进行修改。</li>
+<li>修饰引用类型变量，不能够指向另一个引用。</li>
+<li>修饰类或方法，不能被继承或重写。</li>
+</ul>
+<h3 id="反射"><a href="#反射" class="headerlink" title="反射"></a>反射</h3><ul>
+<li>在运行时动态地获取类的完整信息</li>
+<li>增加程序的灵活性</li>
+<li>JDK 动态代理使用了反射</li>
+</ul>
+<h3 id="JDK动态代理"><a href="#JDK动态代理" class="headerlink" title="JDK动态代理"></a>JDK动态代理</h3><ul>
+<li>使用步骤<ol>
+<li>在创建接口及实现类</li>
+<li>实现代理处理器<code>InvokationHandler</code>，实现<code>invoke(Proxy proxy, Method method, Object[] args)</code></li>
+<li>通过<code>Proxy.newProxyInstance(ClassLoaderLoader, Class[] interfaces, InvocationHandler h)</code>获得代理类</li>
+<li>通过代理类调用方法</li>
+</ol>
+</li>
+</ul>
+<h3 id="Java-IO"><a href="#Java-IO" class="headerlink" title="Java IO"></a>Java IO</h3><ul>
+<li>普通 IO，面向流，同步阻塞线程。</li>
+<li>NIO，面向缓冲区，同步非阻塞。</li>
+</ul>
+<h2 id="Java-集合框架"><a href="#Java-集合框架" class="headerlink" title="Java 集合框架"></a>Java 集合框架</h2><h3 id="List-线性结构"><a href="#List-线性结构" class="headerlink" title="List (线性结构)"></a>List (线性结构)</h3><ul>
+<li>ArrayList Object[] 数组实现，默认大小为 10，支持随机访问，连续内存空间，插入末尾时间复杂度 O(1)，插入第 i 个位置时间复杂度 O(n-i)。扩容，大小变为 1.5 倍，Arrays.copyOf(底层为 System.ArrayCopy)，复制倒新数组，指针指向新数组。</li>
+<li>Vector 类似 ArrayList，线程安全，扩容默认增长为原来的两倍，还可以指定增长空间长度。</li>
+<li>LinkedList 基于链表实现，1.7 为双向链表，1.6为双向循环链表，取消循环能更好地分清头尾。</li>
+</ul>
+<h3 id="Map-Key-Value"><a href="#Map-Key-Value" class="headerlink" title="Map (Key, Value)"></a>Map (Key, Value)</h3><ul>
+<li><p>HashMap</p>
+<ol>
+<li>底层为数据结构，JDK1.8 是<strong>数组 + 链表 + 红黑树</strong>，JDK1.7 无红黑树。链表长度大于8时，转化为红黑树，优化查询效率。</li>
+<li>初始容量为 <strong>16</strong>，通过<code>tableSizeFor</code>保证容量为 2 的幂次方。寻址方式，高位异或，**(n-1)&amp;h** 取模，优化速度。</li>
+<li>扩容机制，当元素数量大于容量 x 负载因子 0.75 时，容量扩大为原来的 2 倍，新建一个数组，然后转移到新的数组。</li>
+<li>基于 Map 实现。</li>
+<li>线程不安全。</li>
+</ol>
+</li>
+<li><p>HashMap(1.7) 多线程循环链表问题</p>
+<ol>
+<li>在多线程环境下，进行扩容时，1.7下的 HashMap 会形成循环链表。</li>
+<li>则么形成循环链表: 假设有一 HashMap 容量为 2，在数组下标 1 位置以 A -&gt; B 链表形式存储。有以线程对该 map 做 put 操作，由于触发扩容条件，需要进行扩容。这时另一个线程也 put 操作，同样需要扩容，并完成了扩容操作，由于复制到新数组是头部插入，所以 1 位置变为 B -&gt; A 。这时第一个线程继续做扩容操作，首先复制 A ，然后复制 B ，再判断 B.next 是否为空时，由于第二个线程做了扩容操作，导致 B.next = A，所以在将 A 放到 B 前，A.next 又等于 B ，导致循环链表出现。</li>
+</ol>
+</li>
+<li><p>HashTable</p>
+<ul>
+<li>线程安全, 方法基本是用 Synchronized 修饰</li>
+<li>初始容量为 11, 扩容为 2n+1</li>
+<li>继承 Dictionary 类。</li>
+</ul>
+</li>
+<li><p>ConcurrentHashMap</p>
+<ul>
+<li>线程安全的 HashMap。</li>
+<li>1.7 采用分段锁的形式加锁; 1.8 使用 Synchronized 和 CAS 实现同步, 若数组的 Node 为空, 则通过 CAS 的方式设置值, 不为空则加在链表的第一个结点。获取第一个元素是否为空使用 Unsafe 类提供的 getObjectVolatile 保证可见性。</li>
+<li>对于读操作, 数组由 volatile 修饰, 同时数组元素为 Node, Node 的 K 使用 final 修饰, V 使用 volatile 修饰, 下一个结点也用 volatile 修饰, 保证多线程的可见性</li>
+</ul>
+</li>
+</ul>
+]]></content>
+      <categories>
+        <category>面试知识点</category>
+      </categories>
+      <tags>
+        <tag>Java</tag>
+        <tag>面试</tag>
+        <tag>八股文</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Redis 相关</title>
     <url>/2021/07/23/Redis-%E7%9B%B8%E5%85%B3/</url>
     <content><![CDATA[<h2 id="一些-Redis-相关的问题"><a href="#一些-Redis-相关的问题" class="headerlink" title="一些 Redis 相关的问题"></a>一些 Redis 相关的问题</h2><h3 id="为什么使用-Redis"><a href="#为什么使用-Redis" class="headerlink" title="为什么使用 Redis?"></a>为什么使用 Redis?</h3><p>因为传统的关系型数据库如 Mysql 已经不能使用所有的场景, 如秒杀的库存扣减, APP首页的访问流量高峰等等, 都很容易让数据库崩溃。所以引入了缓存中间件。目前市面上比较常用的缓存中间件有 Redis 和 Memcached 综合考虑之后, 最后使用了 Redis。</p>
@@ -809,6 +827,25 @@
       </tags>
   </entry>
   <entry>
+    <title>spring boot 学习（二）常用注解开发 RESTful 接口</title>
+    <url>/2020/10/03/spring-boot-%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91-RESTful-%E6%8E%A5%E5%8F%A3/</url>
+    <content><![CDATA[<h2 id="话不多说直接上代码"><a href="#话不多说直接上代码" class="headerlink" title="话不多说直接上代码"></a>话不多说直接上代码</h2><span id="more"></span>
+
+<p>ArticleController.java</p>
+<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">package</span> com.pjboy.first.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.pjboy.first.AjaxResponse;</span><br><span class="line"><span class="keyword">import</span> com.pjboy.first.model.Article;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: first</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: BLADE</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020-10-02 19:13</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/rest&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Description</span>: 查询一篇文章</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&#123;id&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line">  <span class="meta">@GetMapping(&quot;/articles/&#123;id&#125;&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getArticle</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> </span>&#123;</span><br><span class="line">    Article article = Article.builder()</span><br><span class="line">            .id(<span class="number">1L</span>)</span><br><span class="line">            .author(<span class="string">&quot;blade&quot;</span>)</span><br><span class="line">            .content(<span class="string">&quot;xixixiix&quot;</span>)</span><br><span class="line">            .createTime(<span class="keyword">new</span> Date())</span><br><span class="line">            .title(<span class="string">&quot;tit&quot;</span>)</span><br><span class="line">            .build();</span><br><span class="line">    log.info(<span class="string">&quot;article:&quot;</span> + article);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success(article);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 保存一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&quot;, method = RequestMethod.POST)</span></span><br><span class="line">  <span class="meta">@PostMapping(&quot;/articles/&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">saveArticle</span><span class="params">(<span class="meta">@RequestBody</span> Article article)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 修改一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&quot;, method = RequestMethod.PUT)</span></span><br><span class="line">  <span class="meta">@PutMapping(&quot;/articles/&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">updateArticle</span><span class="params">(<span class="meta">@RequestBody</span> Article article)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//if (article.getId() == null) &#123;</span></span><br><span class="line">      <span class="comment">//TODO 抛出一个自定义的异常</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 删除一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&#123;id&#125;&quot;, method = RequestMethod.DELETE)</span></span><br><span class="line">  <span class="meta">@DeleteMapping(&quot;/articles/&#123;id&#125;&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">deleteArticle</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;deleteArticle:&quot;</span> + id);</span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>AjaxResponse.java</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package com.pjboy.first;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @program: first</span><br><span class="line"> * @description:</span><br><span class="line"> * @author: BLADE</span><br><span class="line"> * @create: 2020-10-02 19:19</span><br><span class="line"> **/</span><br><span class="line">@Data</span><br><span class="line">public class AjaxResponse &#123;</span><br><span class="line">  private boolean isok;</span><br><span class="line">  private int code; // 200、400、500</span><br><span class="line">  private String  message;</span><br><span class="line">  private Object data;</span><br><span class="line">  public AjaxResponse() &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success() &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success(Object obj) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line">  public static AjaxResponse success(Object obj, String message) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(message);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>spring boot 学习</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>spring-boot</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>hexo-next 设置首页和归档页的分页数量</title>
     <url>/2021/03/05/hexo-next-%E8%AE%BE%E7%BD%AE%E9%A6%96%E9%A1%B5%E5%92%8C%E5%BD%92%E6%A1%A3%E9%A1%B5%E7%9A%84%E5%88%86%E9%A1%B5%E6%95%B0%E9%87%8F/</url>
     <content><![CDATA[<p>首先需要安装下面两个插件 (第一个是首页,第二个是归档页)</p>
@@ -826,25 +863,6 @@
         <tag>hexo</tag>
         <tag>next</tag>
         <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>spring boot 学习（二）常用注解开发 RESTful 接口</title>
-    <url>/2020/10/03/spring-boot-%E5%AD%A6%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3%E5%BC%80%E5%8F%91-RESTful-%E6%8E%A5%E5%8F%A3/</url>
-    <content><![CDATA[<h2 id="话不多说直接上代码"><a href="#话不多说直接上代码" class="headerlink" title="话不多说直接上代码"></a>话不多说直接上代码</h2><span id="more"></span>
-
-<p>ArticleController.java</p>
-<figure class="highlight java"><table><tr><td class="code"><pre><span class="line">  <span class="keyword">package</span> com.pjboy.first.controller;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> com.pjboy.first.AjaxResponse;</span><br><span class="line"><span class="keyword">import</span> com.pjboy.first.model.Article;</span><br><span class="line"><span class="keyword">import</span> lombok.extern.slf4j.Slf4j;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.bind.annotation.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.Date;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@program</span>: first</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@description</span>:</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@author</span>: BLADE</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@create</span>: 2020-10-02 19:13</span></span><br><span class="line"><span class="comment"> **/</span></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;/rest&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ArticleController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Description</span>: 查询一篇文章</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">  * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">  */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&#123;id&#125;&quot;, method = RequestMethod.GET)</span></span><br><span class="line">  <span class="meta">@GetMapping(&quot;/articles/&#123;id&#125;&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">getArticle</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> Long id)</span> </span>&#123;</span><br><span class="line">    Article article = Article.builder()</span><br><span class="line">            .id(<span class="number">1L</span>)</span><br><span class="line">            .author(<span class="string">&quot;blade&quot;</span>)</span><br><span class="line">            .content(<span class="string">&quot;xixixiix&quot;</span>)</span><br><span class="line">            .createTime(<span class="keyword">new</span> Date())</span><br><span class="line">            .title(<span class="string">&quot;tit&quot;</span>)</span><br><span class="line">            .build();</span><br><span class="line">    log.info(<span class="string">&quot;article:&quot;</span> + article);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success(article);</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 保存一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&quot;, method = RequestMethod.POST)</span></span><br><span class="line">  <span class="meta">@PostMapping(&quot;/articles/&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">saveArticle</span><span class="params">(<span class="meta">@RequestBody</span> Article article)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 修改一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&quot;, method = RequestMethod.PUT)</span></span><br><span class="line">  <span class="meta">@PutMapping(&quot;/articles/&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">updateArticle</span><span class="params">(<span class="meta">@RequestBody</span> Article article)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//if (article.getId() == null) &#123;</span></span><br><span class="line">      <span class="comment">//TODO 抛出一个自定义的异常</span></span><br><span class="line">    <span class="comment">//&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Description</span>: 删除一篇文章</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Param</span>: [id]</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@return</span>: com.pjboy.first.model.Article</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Author</span>: BLADE</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@Date</span>: 2020/10/2</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="comment">//@RequestMapping(value = &quot;/articles/&#123;id&#125;&quot;, method = RequestMethod.DELETE)</span></span><br><span class="line">  <span class="meta">@DeleteMapping(&quot;/articles/&#123;id&#125;&quot;)</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> AjaxResponse <span class="title">deleteArticle</span><span class="params">(<span class="meta">@PathVariable(&quot;id&quot;)</span> <span class="keyword">long</span> id)</span> </span>&#123;</span><br><span class="line">    log.info(<span class="string">&quot;deleteArticle:&quot;</span> + id);</span><br><span class="line">    <span class="keyword">return</span> AjaxResponse.success();</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>AjaxResponse.java</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">package com.pjboy.first;</span><br><span class="line"></span><br><span class="line">import lombok.Data;</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * @program: first</span><br><span class="line"> * @description:</span><br><span class="line"> * @author: BLADE</span><br><span class="line"> * @create: 2020-10-02 19:19</span><br><span class="line"> **/</span><br><span class="line">@Data</span><br><span class="line">public class AjaxResponse &#123;</span><br><span class="line">  private boolean isok;</span><br><span class="line">  private int code; // 200、400、500</span><br><span class="line">  private String  message;</span><br><span class="line">  private Object data;</span><br><span class="line">  public AjaxResponse() &#123;</span><br><span class="line"></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success() &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  public static AjaxResponse success(Object obj) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(&quot;请求相应成功!&quot;);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line">  public static AjaxResponse success(Object obj, String message) &#123;</span><br><span class="line">    AjaxResponse ajaxResponse = new AjaxResponse();</span><br><span class="line">    ajaxResponse.setIsok(true);</span><br><span class="line">    ajaxResponse.setCode(200);</span><br><span class="line">    ajaxResponse.setMessage(message);</span><br><span class="line">    ajaxResponse.setData(obj);</span><br><span class="line">    return ajaxResponse;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>spring boot 学习</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>spring-boot</tag>
       </tags>
   </entry>
   <entry>
@@ -885,6 +903,25 @@ F -->|5.返回处理结果| B
         <tag>idea</tag>
         <tag>spring boot</tag>
         <tag>java</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
+    <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
+    <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
+<p><code>npm install --save hexo-deployer-git</code></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+        <tag>报错</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>测试文章</title>
+    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
+      <tags>
+        <tag>第一次使用</tag>
       </tags>
   </entry>
   <entry>
@@ -931,25 +968,6 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>java</tag>
         <tag>spring-boot</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>测试文章</title>
-    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
-      <tags>
-        <tag>第一次使用</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
-    <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
-    <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
-<p><code>npm install --save hexo-deployer-git</code></p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-        <tag>报错</tag>
       </tags>
   </entry>
   <entry>
