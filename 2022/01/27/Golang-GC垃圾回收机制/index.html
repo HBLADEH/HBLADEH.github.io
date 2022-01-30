@@ -36,8 +36,11 @@
 <meta property="og:image" content="http://example.com/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img5.png">
 <meta property="og:image" content="http://example.com/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img6.png">
 <meta property="og:image" content="http://example.com/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img7.png">
+<meta property="og:image" content="http://example.com/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img8.png">
+<meta property="og:image" content="http://example.com/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img9.png">
+<meta property="og:image" content="http://example.com/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img10.png">
 <meta property="article:published_time" content="2022-01-27T15:23:07.000Z">
-<meta property="article:modified_time" content="2022-01-29T16:05:22.939Z">
+<meta property="article:modified_time" content="2022-01-30T15:12:36.266Z">
 <meta property="article:author" content="BLADE">
 <meta property="article:tag" content="Golang">
 <meta property="article:tag" content="GC垃圾回收">
@@ -238,7 +241,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-01-30 00:05:22" itemprop="dateModified" datetime="2022-01-30T00:05:22+08:00">2022-01-30</time>
+                <time title="修改时间：2022-01-30 23:12:36" itemprop="dateModified" datetime="2022-01-30T23:12:36+08:00">2022-01-30</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -268,14 +271,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="Golang-历代GC设计"><a href="#Golang-历代GC设计" class="headerlink" title="Golang 历代GC设计"></a>Golang 历代GC设计</h2><ol>
+        <h1 id="Golang-历代GC设计"><a href="#Golang-历代GC设计" class="headerlink" title="Golang 历代GC设计"></a>Golang 历代GC设计</h1><ol>
 <li>Go V1.3 之前使用标记清除 (mark &amp; sweep)</li>
 <li>Go V1.5 使用三色标记法</li>
 <li>Go V1.8 使用混合写屏障机制<span id="more"></span>
 
 </li>
 </ol>
-<h2 id="1-标记清除"><a href="#1-标记清除" class="headerlink" title="1. 标记清除"></a>1. 标记清除</h2><p>在程序运行过程中，会出现有些对象没能直接被程序引用到，GC检测到则会触发 STW(Stop The World)暂停程序业务逻辑。</p>
+<h2 id="标记清除"><a href="#标记清除" class="headerlink" title="标记清除"></a>标记清除</h2><p>在程序运行过程中，会出现有些对象没能直接被程序引用到，GC检测到则会触发 STW(Stop The World)暂停程序业务逻辑。</p>
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img1.png" alt="图片"></p>
 <p>之后则会对可达的对象 1-2-3，4-7 做上标记。</p>
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img2.png" alt="图片"></p>
@@ -290,7 +293,7 @@
 </ol>
 <p>原 STW 流程<br>启动STW -&gt; Mark标记 -&gt; Sweep清除 -&gt; 停止STW</p>
 <p>为了缩短STW暂停程序的时间，把Sweep清除步骤放到了后面<br>启动STW -&gt; Mark标记 -&gt;  停止STW -&gt; Sweep清除</p>
-<h2 id="2-三色标记法"><a href="#2-三色标记法" class="headerlink" title="2. 三色标记法"></a>2. 三色标记法</h2><p>一种优化之前Mark标记法的方法。</p>
+<h2 id="三色标记法"><a href="#三色标记法" class="headerlink" title="三色标记法"></a>三色标记法</h2><p>一种优化之前Mark标记法的方法。</p>
 <p>标记分为白色、灰色、黑色三种。</p>
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img4.png" alt="图片"></p>
 <p>初始状态所有的节点都是白色标记。</p>
@@ -300,6 +303,23 @@
 <p>接着遍历灰色节点的标记，给可达的节点打上灰色标记，而原来被遍历的节点则打上黑色标记。</p>
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img7.png" alt="图片"></p>
 <p>往后重复以上动作，直至没有灰色对象，收集所有白色对象，此时白色对象是垃圾。</p>
+<p>如果在使用三色标记法不进行STW，可能会发生的事情：</p>
+<ol>
+<li>一个白色的对象，被黑色对象引用（因为黑色对象不会再进行扫描，会造成误删这个被引用的白色对象）</li>
+<li>灰色对象与它原本可达的的白色对象关系遭到破坏</li>
+</ol>
+<p>以上两个条件都满足，则会出现<strong>对象丢失</strong>的现象</p>
+<h3 id="强弱三色不变式"><a href="#强弱三色不变式" class="headerlink" title="强弱三色不变式"></a>强弱三色不变式</h3><p>如果三色标记中满足强/弱之一，则可以保证对象不会丢失</p>
+<p>强三色不变式：强制性不允许黑色对象引用白色对象</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img8.png" alt="图片"></p>
+<p>弱三色不变式：黑色对象可以引用白色对象，但是白色对象必须存在其它灰色对象对它进行引用，或者可达它的链路上游存在灰色对象</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img9.png" alt="图片"></p>
+<h3 id="屏障机制"><a href="#屏障机制" class="headerlink" title="屏障机制"></a>屏障机制</h3><p>屏障是一种额外的判断机制 （类似 Hook、回调、Handler 机制）</p>
+<h4 id="插入屏障"><a href="#插入屏障" class="headerlink" title="插入屏障"></a>插入屏障</h4><p>对象被引用的时候，触发的机制 （堆中启用）</p>
+<p>具体操作：在 A 对象引用 B 时，B对象被标记为灰色。</p>
+<p>满足：强三色不变式 （此时不存在黑色引用白色对象了，因为白色对象会变成黑色）</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img10.png" alt="图片"></p>
+<h4 id="删除屏障"><a href="#删除屏障" class="headerlink" title="删除屏障"></a>删除屏障</h4><p>对象被取消引用的时候，出发的机制</p>
 
     </div>
 
@@ -382,7 +402,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Golang-%E5%8E%86%E4%BB%A3GC%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">Golang 历代GC设计</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4"><span class="nav-number">2.</span> <span class="nav-text">1. 标记清除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95"><span class="nav-number">3.</span> <span class="nav-text">2. 三色标记法</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Golang-%E5%8E%86%E4%BB%A3GC%E8%AE%BE%E8%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">Golang 历代GC设计</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%A0%87%E8%AE%B0%E6%B8%85%E9%99%A4"><span class="nav-number">1.1.</span> <span class="nav-text">标记清除</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%89%E8%89%B2%E6%A0%87%E8%AE%B0%E6%B3%95"><span class="nav-number">1.2.</span> <span class="nav-text">三色标记法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%BA%E5%BC%B1%E4%B8%89%E8%89%B2%E4%B8%8D%E5%8F%98%E5%BC%8F"><span class="nav-number">1.2.1.</span> <span class="nav-text">强弱三色不变式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%8F%E9%9A%9C%E6%9C%BA%E5%88%B6"><span class="nav-number">1.2.2.</span> <span class="nav-text">屏障机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%92%E5%85%A5%E5%B1%8F%E9%9A%9C"><span class="nav-number">1.2.2.1.</span> <span class="nav-text">插入屏障</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E5%B1%8F%E9%9A%9C"><span class="nav-number">1.2.2.2.</span> <span class="nav-text">删除屏障</span></a></li></ol></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
