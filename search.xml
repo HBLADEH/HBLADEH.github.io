@@ -113,7 +113,12 @@
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img24.png" alt="图片"></p>
 <p>对象10引用对象7，之后对象4取消对对象7的引用。在取消引用的时候触发了删除屏障，被删除的对象7被标记为灰色。</p>
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img25.png" alt="图片"></p>
-<h3 id="场景四"><a href="#场景四" class="headerlink" title="场景四"></a>场景四</h3><p><strong>场景四：对象从一个栈对象删除引用，成为另一个栈对象的下游</strong></p>
+<h3 id="场景四"><a href="#场景四" class="headerlink" title="场景四"></a>场景四</h3><p><strong>场景四：对象从一个栈对象删除引用，成为另一个堆对象的下游</strong></p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img26.png" alt="图片"></p>
+<p>具体场景，栈对象1删除对栈对象2的引用。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img27.png" alt="图片"></p>
+<p>堆的对象4把对对象7的引用转移到对象2。（删除对对象7的引用，添加对对象2的引用）删除对对象7的引用时，会触发删除屏障，把对象7标记为灰色</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img28.png" alt="图片"></p>
 ]]></content>
       <categories>
         <category>Golang 学习</category>
@@ -777,31 +782,6 @@
       </tags>
   </entry>
   <entry>
-    <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
-    <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
-    <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
-<p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-
-<p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
-
-<p>接着更新</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd themes/next/source/lib/canvas-nest</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
-<p>重新构建一下大功告成!</p>
-]]></content>
-      <categories>
-        <category>hexo 循序渐进</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-        <tag>插件</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Vue 学习 事件修饰符</title>
     <url>/2020/11/01/Vue-%E5%AD%A6%E4%B9%A0-%E4%BA%8B%E4%BB%B6%E4%BF%AE%E9%A5%B0%E7%AC%A6/</url>
     <content><![CDATA[<p>在事件处理程序中调用 event.preventDefault() 或 event.stopPropagation() 是非常常见的需求。尽管我们可以在方法中轻松实现这点，但更好的方式是：方法只有纯粹的数据逻辑，而不是去处理 DOM 事件细节。</p>
@@ -840,6 +820,31 @@
       <tags>
         <tag>vue</tag>
         <tag>前端</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
+    <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
+    <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
+<p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
+
+<p>接着更新</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd themes/next/source/lib/canvas-nest</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<p>重新构建一下大功告成!</p>
+]]></content>
+      <categories>
+        <category>hexo 循序渐进</category>
+      </categories>
+      <tags>
+        <tag>hexo</tag>
+        <tag>next</tag>
+        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -972,14 +977,6 @@ F -->|5.返回处理结果| B
       </tags>
   </entry>
   <entry>
-    <title>测试文章</title>
-    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
-      <tags>
-        <tag>第一次使用</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>学习 spring boot（一）新建项目，项目结构解析</title>
     <url>/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<p>上来我直接列出 spring boot 的优点:</p>
@@ -1026,6 +1023,25 @@ F -->|5.返回处理结果| B
       </tags>
   </entry>
   <entry>
+    <title>测试文章</title>
+    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
+      <tags>
+        <tag>第一次使用</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
+    <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
+    <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
+<p><code>npm install --save hexo-deployer-git</code></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+        <tag>报错</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>计算机网络-知识</title>
     <url>/2021/05/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h2 id="说一说七层模型，各层都是干什么的？有哪些协议？"><a href="#说一说七层模型，各层都是干什么的？有哪些协议？" class="headerlink" title="说一说七层模型，各层都是干什么的？有哪些协议？"></a>说一说七层模型，各层都是干什么的？有哪些协议？</h2><ol>
@@ -1044,17 +1060,6 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>面试</tag>
         <tag>计算机网络</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
-    <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
-    <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
-<p><code>npm install --save hexo-deployer-git</code></p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-        <tag>报错</tag>
       </tags>
   </entry>
 </search>
