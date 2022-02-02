@@ -18,8 +18,8 @@
     <url>/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/</url>
     <content><![CDATA[<h1 id="Golang-历代GC设计"><a href="#Golang-历代GC设计" class="headerlink" title="Golang 历代GC设计"></a>Golang 历代GC设计</h1><ol>
 <li>Go V1.3 之前使用标记清除 (mark &amp; sweep)</li>
-<li>Go V1.5 使用三色标记法</li>
-<li>Go V1.8 使用混合写屏障机制<span id="more"></span>
+<li>Go V1.5 使用三色标记法 + 读写屏障</li>
+<li>Go V1.8 使用 三色标记法 + 混合写屏障机制<span id="more"></span>
 
 </li>
 </ol>
@@ -64,7 +64,56 @@
 <p>具体操作：在 A 对象引用 B 时，B对象被标记为灰色。</p>
 <p>满足：强三色不变式 （此时不存在黑色引用白色对象了，因为白色对象会变成黑色）</p>
 <p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img10.png" alt="图片"></p>
+<p>在最终准备回收白色节点前，将会重新扫描一边栈空间。此时启动STW保护栈，防止外界干扰。最终在对栈内的节点进行一次三色标记法。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img11.png" alt="图片"></p>
+<p>插入写屏障的不足：结束时仍需要 STW 来重新扫描栈，大约需要10-100ms。</p>
 <h4 id="删除屏障"><a href="#删除屏障" class="headerlink" title="删除屏障"></a>删除屏障</h4><p>对象被取消引用的时候，出发的机制</p>
+<p>具体操作：被删除的对象，如果自身为灰色或者白色，那么标记为灰色。</p>
+<p>满足：弱三色不变式（保证灰色对象到白色对象的路径不会断）</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img122.png" alt="图片"></p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img12.png" alt="图片"></p>
+<p>当出现删除节点操作时，触发删除屏障，如果被删除的节点是灰色或者白色，该节点设置为灰色。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img13.png" alt="图片"></p>
+<p>最终扫描完之后只删除节点6.节点5，2，3留到下一轮删除。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img14.png" alt="图片"></p>
+<p>这是为了保证如果节点5万一被其它节点所引用，则延后删除。</p>
+<p>删除写屏障的不足：回收精度低，一个对象即使删除了最后一个指向它的指针也依旧可以存活一轮，在下一轮 GC 中被清理。</p>
+<h2 id="混合写屏障机制"><a href="#混合写屏障机制" class="headerlink" title="混合写屏障机制"></a>混合写屏障机制</h2><p>具体操作：</p>
+<ol>
+<li>GC 开始时将栈上的对象全部设置为黑色 （为了不再进行第二次重复扫描，无需 STW）</li>
+<li>GC 期间，任何在栈上创建的新对象，均为黑色</li>
+<li>被删除的对象标记为灰色</li>
+<li>被添加的对象标记为灰色</li>
+</ol>
+<p>满足：变形的弱三色不变式（结合了插入、删除写屏障的优点）</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img15.png" alt="图片"></p>
+<h3 id="场景一"><a href="#场景一" class="headerlink" title="场景一"></a>场景一</h3><p><strong>场景一：一个对象被一个堆对象删除引用时，此时成为栈对象的下游</strong></p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img17.png" alt="图片"></p>
+<p>前提：堆对象4的下游对象是对象7（对象7被对象4引用）</p>
+<p>下面两行分别是两个操作</p>
+<ul>
+<li>一个是把栈对象1的下游挂载上堆对象7</li>
+<li>一个是把堆对象4中对对象7的引用给删除</li>
+</ul>
+<p>混合写屏障流程：</p>
+<p>在开始操作时，先吧栈上的所有可达节点设置为黑色。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img16.png" alt="图片"></p>
+<p>此时删除对象4对对象7的引用，触发机制。因为对象4是在堆区，所以触发写屏障，标记被删除的对象7为灰色。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img19.png" alt="图片"></p>
+<h3 id="场景二"><a href="#场景二" class="headerlink" title="场景二"></a>场景二</h3><p><strong>场景二：对象被一个栈对象删除引用，成为另一个栈对象的下游</strong></p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img20.png" alt="图片"></p>
+<p>具体场景：</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img21.png" alt="图片"></p>
+<p>在程序运行过程中，一个新的栈对象9出现。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img22.png" alt="图片"></p>
+<p>此时栈对象9先引用了对象3，然后对象2取消对对象3的引用。（若对象9不引用对象3，对象2继续取消则会让对象3空过一轮，下一轮重复操作的时候作为垃圾去除）</p>
+<h3 id="场景三"><a href="#场景三" class="headerlink" title="场景三"></a>场景三</h3><p>场景三：对象被一个堆对象删除引用，成为另一个堆对象的下游</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img23.png" alt="图片"></p>
+<p>具体场景，初始状态在堆处新增了一个节点，直接标记为黑色（此为特殊情况，用于展示机制）。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img24.png" alt="图片"></p>
+<p>对象10引用对象7，之后对象4取消对对象7的引用。在取消引用的时候触发了删除屏障，被删除的对象7被标记为灰色。</p>
+<p><img src="/2022/01/27/Golang-GC%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6/img25.png" alt="图片"></p>
+<h3 id="场景四"><a href="#场景四" class="headerlink" title="场景四"></a>场景四</h3><p><strong>场景四：对象从一个栈对象删除引用，成为另一个栈对象的下游</strong></p>
 ]]></content>
       <categories>
         <category>Golang 学习</category>
@@ -693,6 +742,20 @@
       </tags>
   </entry>
   <entry>
+    <title>Redis 相关</title>
+    <url>/2021/07/23/Redis-%E7%9B%B8%E5%85%B3/</url>
+    <content><![CDATA[<h2 id="一些-Redis-相关的问题"><a href="#一些-Redis-相关的问题" class="headerlink" title="一些 Redis 相关的问题"></a>一些 Redis 相关的问题</h2><h3 id="为什么使用-Redis"><a href="#为什么使用-Redis" class="headerlink" title="为什么使用 Redis?"></a>为什么使用 Redis?</h3><p>因为传统的关系型数据库如 Mysql 已经不能使用所有的场景, 如秒杀的库存扣减, APP首页的访问流量高峰等等, 都很容易让数据库崩溃。所以引入了缓存中间件。目前市面上比较常用的缓存中间件有 Redis 和 Memcached 综合考虑之后, 最后使用了 Redis。</p>
+<h3 id="Redis-有哪些数据结构"><a href="#Redis-有哪些数据结构" class="headerlink" title="Redis 有哪些数据结构?"></a>Redis 有哪些数据结构?</h3><p>字符串 String, 字典 Hash, 列表 List, 有序集合 SortedSet</p>
+<h3 id="如果有大量的-Key-需要设置同一时间过期-一般需要注意什么"><a href="#如果有大量的-Key-需要设置同一时间过期-一般需要注意什么" class="headerlink" title="如果有大量的 Key 需要设置同一时间过期, 一般需要注意什么?"></a>如果有大量的 Key 需要设置同一时间过期, 一般需要注意什么?</h3><p>如果大量的 Key 过期时间设置得过于集中, 到过期的那个时间点, Redis 可能会出现短暂的卡顿现象。严重的话会出现缓存雪崩,我们一般需要在时间上加一个随机值, 使得过期时间分散一些。<br>(电商首页经常会使用定时任务刷新缓存, 可能大量的数据失效时间都十分集中, 如果失效时间一样,又刚好在失效的时间点大量用户涌入, 就有可能造成缓存雪崩)</p>
+<h3 id="Redis-分布式锁是什么"><a href="#Redis-分布式锁是什么" class="headerlink" title="Redis 分布式锁是什么"></a>Redis 分布式锁是什么</h3><p>(先拿setnx来争抢锁, 抢到之后, 再用 expire 给锁加一个过期时间防止锁忘记释放)<br>如果在 setnx 之后执行 expire 之前进程意外 crash 或者要重启维护了, 此时可以用 set 指令的参数来把 setnx 和 expire 合成为一条指令来用</p>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+        <tag>Redis</tag>
+        <tag>数据库</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Spring Boot URL 传 Date 类型无法识别和数据库无法准备比较时间问题解决</title>
     <url>/2020/12/16/Spring-Boot-URL-%E4%BC%A0-Date-%E7%B1%BB%E5%9E%8B%E6%97%A0%E6%B3%95%E8%AF%86%E5%88%AB%E5%92%8C%E6%95%B0%E6%8D%AE%E5%BA%93%E6%97%A0%E6%B3%95%E5%87%86%E5%A4%87%E6%AF%94%E8%BE%83%E6%97%B6%E9%97%B4%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3/</url>
     <content><![CDATA[<p>首先检测配置文件 application.yml 的 jackson 的设置</p>
@@ -714,17 +777,28 @@
       </tags>
   </entry>
   <entry>
-    <title>Redis 相关</title>
-    <url>/2021/07/23/Redis-%E7%9B%B8%E5%85%B3/</url>
-    <content><![CDATA[<h2 id="一些-Redis-相关的问题"><a href="#一些-Redis-相关的问题" class="headerlink" title="一些 Redis 相关的问题"></a>一些 Redis 相关的问题</h2><h3 id="为什么使用-Redis"><a href="#为什么使用-Redis" class="headerlink" title="为什么使用 Redis?"></a>为什么使用 Redis?</h3><p>因为传统的关系型数据库如 Mysql 已经不能使用所有的场景, 如秒杀的库存扣减, APP首页的访问流量高峰等等, 都很容易让数据库崩溃。所以引入了缓存中间件。目前市面上比较常用的缓存中间件有 Redis 和 Memcached 综合考虑之后, 最后使用了 Redis。</p>
-<h3 id="Redis-有哪些数据结构"><a href="#Redis-有哪些数据结构" class="headerlink" title="Redis 有哪些数据结构?"></a>Redis 有哪些数据结构?</h3><p>字符串 String, 字典 Hash, 列表 List, 有序集合 SortedSet</p>
-<h3 id="如果有大量的-Key-需要设置同一时间过期-一般需要注意什么"><a href="#如果有大量的-Key-需要设置同一时间过期-一般需要注意什么" class="headerlink" title="如果有大量的 Key 需要设置同一时间过期, 一般需要注意什么?"></a>如果有大量的 Key 需要设置同一时间过期, 一般需要注意什么?</h3><p>如果大量的 Key 过期时间设置得过于集中, 到过期的那个时间点, Redis 可能会出现短暂的卡顿现象。严重的话会出现缓存雪崩,我们一般需要在时间上加一个随机值, 使得过期时间分散一些。<br>(电商首页经常会使用定时任务刷新缓存, 可能大量的数据失效时间都十分集中, 如果失效时间一样,又刚好在失效的时间点大量用户涌入, 就有可能造成缓存雪崩)</p>
-<h3 id="Redis-分布式锁是什么"><a href="#Redis-分布式锁是什么" class="headerlink" title="Redis 分布式锁是什么"></a>Redis 分布式锁是什么</h3><p>(先拿setnx来争抢锁, 抢到之后, 再用 expire 给锁加一个过期时间防止锁忘记释放)<br>如果在 setnx 之后执行 expire 之前进程意外 crash 或者要重启维护了, 此时可以用 set 指令的参数来把 setnx 和 expire 合成为一条指令来用</p>
+    <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
+    <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
+    <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
+<p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
+<span id="more"></span>
+
+<p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
+<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
+
+<p>接着更新</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd themes/next/source/lib/canvas-nest</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
+
+<p>重新构建一下大功告成!</p>
 ]]></content>
+      <categories>
+        <category>hexo 循序渐进</category>
+      </categories>
       <tags>
-        <tag>面试</tag>
-        <tag>Redis</tag>
-        <tag>数据库</tag>
+        <tag>hexo</tag>
+        <tag>next</tag>
+        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -766,31 +840,6 @@
       <tags>
         <tag>vue</tag>
         <tag>前端</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>hexo-next 添加动态背景 (canvas-nest 几何动效)</title>
-    <url>/2021/03/05/hexo-next-%E6%B7%BB%E5%8A%A0%E5%8A%A8%E6%80%81%E8%83%8C%E6%99%AF-canvas-nest-%E5%87%A0%E4%BD%95%E5%8A%A8%E6%95%88/</url>
-    <content><![CDATA[<p>首先需要去 github 上克隆 canvas-nest 项目到 themes/next/source/lib/canvas-nest 目录 (没有 canvas-nest 这个文件夹请自行创建)</p>
-<p><a href="https://github.com/theme-next/theme-next-canvas-nest">theme-next-canvas-nest</a></p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git clone https://github.com/theme-next/theme-next-canvas-nest source/lib/canvas-nest</span><br></pre></td></tr></table></figure>
-<span id="more"></span>
-
-<p>然后在 themes/next/_config.yml 文件中添加如下代码:</p>
-<figure class="highlight yml"><table><tr><td class="code"><pre><span class="line"><span class="attr">canvas_nest:</span></span><br><span class="line">  <span class="attr">enable:</span> <span class="literal">true</span></span><br><span class="line">  <span class="attr">onmobile:</span> <span class="literal">true</span> <span class="comment"># display on mobile or not</span></span><br><span class="line">  <span class="attr">color:</span> <span class="string">&#x27;0,0,255&#x27;</span> <span class="comment"># RGB values, use &#x27;,&#x27; to separate</span></span><br><span class="line">  <span class="attr">opacity:</span> <span class="number">0.5</span> <span class="comment"># the opacity of line: 0~1</span></span><br><span class="line">  <span class="attr">zIndex:</span> <span class="number">-1</span> <span class="comment"># z-index property of the background</span></span><br><span class="line">  <span class="attr">count:</span> <span class="number">99</span> <span class="comment"># the number of lines</span></span><br></pre></td></tr></table></figure>
-
-<p>接着更新</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">cd themes/next/source/lib/canvas-nest</span><br><span class="line">git pull</span><br></pre></td></tr></table></figure>
-
-<p>重新构建一下大功告成!</p>
-]]></content>
-      <categories>
-        <category>hexo 循序渐进</category>
-      </categories>
-      <tags>
-        <tag>hexo</tag>
-        <tag>next</tag>
-        <tag>插件</tag>
       </tags>
   </entry>
   <entry>
@@ -923,6 +972,14 @@ F -->|5.返回处理结果| B
       </tags>
   </entry>
   <entry>
+    <title>测试文章</title>
+    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
+    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
+      <tags>
+        <tag>第一次使用</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>学习 spring boot（一）新建项目，项目结构解析</title>
     <url>/2020/09/30/%E5%AD%A6%E4%B9%A0-spring-boot-%E4%B8%80-%E6%96%B0%E5%BB%BA%E9%A1%B9%E7%9B%AE/</url>
     <content><![CDATA[<p>上来我直接列出 spring boot 的优点:</p>
@@ -969,25 +1026,6 @@ F -->|5.返回处理结果| B
       </tags>
   </entry>
   <entry>
-    <title>测试文章</title>
-    <url>/2020/09/29/%E6%B5%8B%E8%AF%95%E6%96%87%E7%AB%A0/</url>
-    <content><![CDATA[<h2 id="测试一哈这个怎么用哈"><a href="#测试一哈这个怎么用哈" class="headerlink" title="测试一哈这个怎么用哈"></a>测试一哈这个怎么用哈</h2>]]></content>
-      <tags>
-        <tag>第一次使用</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
-    <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
-    <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
-<p><code>npm install --save hexo-deployer-git</code></p>
-]]></content>
-      <tags>
-        <tag>hexo</tag>
-        <tag>报错</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>计算机网络-知识</title>
     <url>/2021/05/23/%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%BD%91%E7%BB%9C-%E7%9F%A5%E8%AF%86/</url>
     <content><![CDATA[<h2 id="说一说七层模型，各层都是干什么的？有哪些协议？"><a href="#说一说七层模型，各层都是干什么的？有哪些协议？" class="headerlink" title="说一说七层模型，各层都是干什么的？有哪些协议？"></a>说一说七层模型，各层都是干什么的？有哪些协议？</h2><ol>
@@ -1006,6 +1044,17 @@ F -->|5.返回处理结果| B
       <tags>
         <tag>面试</tag>
         <tag>计算机网络</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>解决当 使用 hexo d 命令 显示 ERROR Deployer not found: git</title>
+    <url>/2020/09/30/%E8%A7%A3%E5%86%B3%E5%BD%93-%E4%BD%BF%E7%94%A8-hexo-d-%E5%91%BD%E4%BB%A4-%E6%98%BE%E7%A4%BA-ERROR-Deployer-not-found-git/</url>
+    <content><![CDATA[<p>出现该问题是因为没有安装对应部署，执行下面命令即可</p>
+<p><code>npm install --save hexo-deployer-git</code></p>
+]]></content>
+      <tags>
+        <tag>hexo</tag>
+        <tag>报错</tag>
       </tags>
   </entry>
 </search>
